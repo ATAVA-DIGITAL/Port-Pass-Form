@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Form - Perfect Coordinate Lock</title>
+  <title>Port Pass Form - Absolute Precision Lock</title>
   <style>
     * {
       box-sizing: border-box;
@@ -18,6 +18,7 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Fixed A4 Frame Dimensions */
     .page-container {
       position: relative;
       width: 794px;
@@ -25,8 +26,11 @@
       margin: 20px 0;
       background-color: #fff;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      page-break-after: always;
+      page-break-inside: avoid;
     }
 
+    /* Background Image */
     .bg-image {
       position: absolute;
       top: 0;
@@ -36,6 +40,7 @@
       z-index: 1;
     }
 
+    /* Form Overlays */
     .overlay-form {
       position: absolute;
       top: 0;
@@ -45,6 +50,7 @@
       z-index: 2;
     }
 
+    /* Inputs Base Style */
     .clean-input {
       position: absolute;
       background: transparent;
@@ -70,6 +76,7 @@
       accent-color: #000;
     }
 
+    /* Photo Field Overlay */
     .photo-overlay {
       position: absolute;
       top: 142px;
@@ -94,6 +101,7 @@
       object-fit: cover;
     }
 
+    /* Control Panel Button */
     .controls {
       position: fixed;
       top: 15px;
@@ -112,6 +120,7 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
+    /* PRINT HARDWARE LOCK - STOPS PAGE OVERLAPPING */
     @page {
       size: A4 portrait;
       margin: 0mm !important;
@@ -121,10 +130,9 @@
       html, body {
         width: 210mm !important;
         height: 297mm !important;
-        background: none !important;
+        background: white !important;
         margin: 0 !important;
         padding: 0 !important;
-        overflow: hidden !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -134,12 +142,10 @@
       .page-container {
         width: 210mm !important;
         height: 297mm !important;
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
+        position: relative !important;
         margin: 0 !important;
         box-shadow: none !important;
-        page-break-after: avoid !important;
+        page-break-after: always !important;
         page-break-inside: avoid !important;
       }
       .clean-input:focus {
@@ -159,7 +165,7 @@
     <img src="GATE PASS13081_page-0001.jpg" class="bg-image" alt="Port Pass Page 1">
 
     <div class="overlay-form">
-      <!-- Photo Area -->
+      <!-- Photo Upload Area -->
       <div class="photo-overlay">
         <img id="imgPreview" style="display:none;">
         <input type="file" accept="image/*" title="Click to Upload Photo" onchange="loadPhoto(event)">
@@ -179,7 +185,7 @@
       <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 555px;"> <!-- ALL PLACES -->
       <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 673px;"> <!-- DU TOWER -->
 
-      <!-- Main Form Line Inputs -->
+      <!-- Form Main Line Inputs -->
       <input type="text" class="clean-input" style="top: 288px; left: 250px; width: 360px;"> <!-- FULL NAME -->
       <input type="text" class="clean-input" style="top: 323px; left: 250px; width: 360px;"> <!-- NATIONALITY -->
       <input type="text" class="clean-input" style="top: 358px; left: 250px; width: 360px;"> <!-- PROFESSION -->
@@ -194,14 +200,14 @@
       <input type="text" class="clean-input" style="top: 673px; left: 250px; width: 360px;"> <!-- SIGNATURE -->
       <input type="text" class="clean-input" style="top: 708px; left: 250px; width: 360px;"> <!-- VISA VALIDITY DATE -->
 
-      <!-- Corrected PORT PASS PERIOD Boxes (Week, Month, Year Inputs inside white boxes) -->
-      <input type="text" class="clean-input" style="top: 728px; left: 295px; width: 45px; height: 22px; text-align: center;"> <!-- WEEK -->
-      <input type="text" class="clean-input" style="top: 728px; left: 512px; width: 45px; height: 22px; text-align: center;"> <!-- MONTH -->
-      <input type="text" class="clean-input" style="top: 728px; left: 668px; width: 45px; height: 22px; text-align: center;"> <!-- YEAR -->
+      <!-- FIXED: PORT PASS PERIOD Inputs Inside the White Boxes -->
+      <input type="text" class="clean-input" style="top: 736px; left: 272px; width: 42px; height: 18px; text-align: center;"> <!-- WEEK -->
+      <input type="text" class="clean-input" style="top: 736px; left: 412px; width: 42px; height: 18px; text-align: center;"> <!-- MONTH -->
+      <input type="text" class="clean-input" style="top: 736px; left: 535px; width: 42px; height: 18px; text-align: center;"> <!-- YEAR -->
 
-      <!-- Corrected PORT PASS VALIDITY Boxes (FROM / TO Inputs) -->
-      <input type="text" class="clean-input" style="top: 760px; left: 272px; width: 102px; height: 24px; text-align: center;"> <!-- FROM -->
-      <input type="text" class="clean-input" style="top: 760px; left: 415px; width: 102px; height: 24px; text-align: center;"> <!-- TO -->
+      <!-- FIXED: PORT PASS VALIDITY FROM / TO Inputs Inside White Boxes -->
+      <input type="text" class="clean-input" style="top: 772px; left: 215px; width: 85px; height: 20px; text-align: center;"> <!-- FROM -->
+      <input type="text" class="clean-input" style="top: 772px; left: 332px; width: 85px; height: 20px; text-align: center;"> <!-- TO -->
     </div>
   </div>
 
