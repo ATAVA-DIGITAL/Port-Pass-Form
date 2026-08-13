@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Fillable Form Overlay</title>
+  <title>Port Pass Form Overlay</title>
   <style>
     * {
       box-sizing: border-box;
@@ -18,17 +18,17 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Page Container representing A4 Aspect Ratio */
+    /* Standard A4 Aspect Ratio Container */
     .page-container {
       position: relative;
-      width: 850px;
-      height: 1120px;
+      width: 800px;
+      height: 1131px;
       margin-bottom: 30px;
       background-color: #fff;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
     }
 
-    /* Original Background Images */
+    /* Background Image */
     .bg-image {
       position: absolute;
       top: 0;
@@ -38,7 +38,7 @@
       z-index: 1;
     }
 
-    /* Overlay Layer for Form Inputs */
+    /* Form Overlay */
     .overlay-form {
       position: absolute;
       top: 0;
@@ -48,46 +48,45 @@
       z-index: 2;
     }
 
-    /* Standard Text Input Fields */
-    .fill-input {
+    /* Clean Input Fields without extra borders */
+    .clean-input {
       position: absolute;
-      background: rgba(255, 255, 255, 0.2); /* Slightly visible on screen, easy to locate */
-      border: 1px dashed #2196F3; /* Visual guide during typing */
-      font-size: 14px;
+      background: transparent;
+      border: none;
+      font-size: 13px;
       font-weight: bold;
       color: #000;
-      padding: 2px 5px;
       outline: none;
+      padding: 0 4px;
+      font-family: Arial, sans-serif;
     }
 
-    .fill-input:focus {
-      background: #ffffff;
-      border: 1px solid #000;
+    /* Highlight slightly on focus while typing */
+    .clean-input:focus {
+      background: rgba(255, 255, 200, 0.4);
     }
 
-    /* Custom Positioned Checkboxes */
-    .fill-checkbox {
+    /* Clean Checkboxes aligned with background boxes */
+    .clean-checkbox {
       position: absolute;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       cursor: pointer;
+      margin: 0;
       accent-color: #000;
     }
 
-    /* Photo Upload Box Overlay */
+    /* Photo Upload Overlay */
     .photo-overlay {
       position: absolute;
-      top: 128px;
-      left: 68px;
-      width: 100px;
-      height: 120px;
-      border: 1px dashed #2196F3;
-      background: rgba(255,255,255,0.4);
+      top: 139px;
+      left: 62px;
+      width: 95px;
+      height: 112px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      overflow: hidden;
     }
     .photo-overlay input[type="file"] {
       position: absolute;
@@ -102,31 +101,25 @@
       object-fit: cover;
     }
 
-    /* Top Control Panel */
+    /* Controls */
     .controls {
       position: fixed;
       top: 15px;
       right: 15px;
       z-index: 100;
-      display: flex;
-      gap: 10px;
     }
     .btn {
       padding: 10px 20px;
-      background-color: #008CBA;
+      background-color: #0d47a1;
       color: white;
       border: none;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-    .btn:hover {
-      background-color: #005f7f;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    /* PRINT STYLES - Hides input borders & control buttons */
     @media print {
       body {
         background: none;
@@ -142,90 +135,75 @@
         width: 100%;
         height: 100vh;
       }
-      .fill-input {
-        background: transparent !important;
-        border: none !important;
-      }
-      .photo-overlay {
-        border: none !important;
-        background: transparent !important;
+      .clean-input:focus {
+        background: transparent;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fixed Top Print Button -->
   <div class="controls">
     <button class="btn" onclick="window.print()">Print / Save PDF</button>
   </div>
 
-  <!-- PAGE 1 CONTAINER -->
+  <!-- PAGE 1 -->
   <div class="page-container">
-    <!-- Background Image 1 (Replace 'GATE PASS13081_page-0001.jpg' with your image name/path) -->
     <img src="GATE PASS13081_page-0001.jpg" class="bg-image" alt="Port Pass Page 1">
 
     <div class="overlay-form">
       <!-- Photo Field -->
       <div class="photo-overlay">
-        <span style="font-size: 10px; text-align:center;">Click to<br>Upload</span>
         <img id="imgPreview" style="display:none;">
-        <input type="file" accept="image/*" onchange="loadPhoto(event)">
+        <input type="file" accept="image/*" title="Click to Upload Photo" onchange="loadPhoto(event)">
       </div>
 
-      <!-- Top Location Checkboxes -->
-      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 245px;"> <!-- QUAY -->
-      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 364px;"> <!-- WAREHOUSE -->
-      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 501px;"> <!-- COMPANY -->
-      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 648px;"> <!-- RORO YARD -->
-      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 810px;"> <!-- POLICE -->
+      <!-- Top Row Checkboxes -->
+      <input type="checkbox" class="clean-checkbox" style="top: 191px; left: 231px;"> <!-- QUAY -->
+      <input type="checkbox" class="clean-checkbox" style="top: 191px; left: 343px;"> <!-- WAREHOUSE -->
+      <input type="checkbox" class="clean-checkbox" style="top: 191px; left: 472px;"> <!-- COMPANY -->
+      <input type="checkbox" class="clean-checkbox" style="top: 191px; left: 610px;"> <!-- RORO YARD -->
+      <input type="checkbox" class="clean-checkbox" style="top: 191px; left: 762px;"> <!-- POLICE -->
 
-      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 245px;"> <!-- CONTAINER YARD -->
-      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 418px;"> <!-- IMIGRATION -->
-      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 546px;"> <!-- SHIP -->
-      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 686px;"> <!-- ALL PLACES -->
-      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 835px;"> <!-- DU TOWER -->
+      <!-- Second Row Checkboxes -->
+      <input type="checkbox" class="clean-checkbox" style="top: 251px; left: 231px;"> <!-- CONTAINER YARD -->
+      <input type="checkbox" class="clean-checkbox" style="top: 251px; left: 395px;"> <!-- IMIGRATION -->
+      <input type="checkbox" class="clean-checkbox" style="top: 251px; left: 516px;"> <!-- SHIP -->
+      <input type="checkbox" class="clean-checkbox" style="top: 251px; left: 647px;"> <!-- ALL PLACES -->
+      <input type="checkbox" class="clean-checkbox" style="top: 251px; left: 787px;"> <!-- DU TOWER -->
 
-      <!-- Main Text Inputs (Aligned Exactly over Form Lines) -->
-      <input type="text" class="fill-input" style="top: 262px; left: 268px; width: 388px; height: 22px;"> <!-- APPLICANT'S FULL NAME -->
-      <input type="text" class="fill-input" style="top: 295px; left: 268px; width: 388px; height: 22px;"> <!-- NATIONALITY -->
-      <input type="text" class="fill-input" style="top: 327px; left: 268px; width: 388px; height: 22px;"> <!-- PROFESSION -->
-      <input type="text" class="fill-input" style="top: 358px; left: 268px; width: 388px; height: 22px;"> <!-- PASSPORT NO -->
-      <input type="text" class="fill-input" style="top: 390px; left: 268px; width: 388px; height: 22px;"> <!-- UID NO -->
-      <input type="text" class="fill-input" style="top: 422px; left: 268px; width: 388px; height: 22px;"> <!-- EMIRATES ID NO -->
-      <input type="text" class="fill-input" style="top: 454px; left: 268px; width: 388px; height: 22px;"> <!-- COMPANY NAME -->
-      <input type="text" class="fill-input" style="top: 485px; left: 268px; width: 388px; height: 22px;"> <!-- COMPANY ADDRESS & TEL -->
-      <input type="text" class="fill-input" style="top: 517px; left: 268px; width: 388px; height: 22px;"> <!-- APPLICANT'S MOBILE NO -->
-      <input type="text" class="fill-input" style="top: 548px; left: 268px; width: 388px; height: 22px;"> <!-- REASON FOR PASS -->
-      <input type="text" class="fill-input" style="top: 580px; left: 268px; width: 388px; height: 22px;"> <!-- DATE OF APPLICATION -->
-      <input type="text" class="fill-input" style="top: 611px; left: 268px; width: 388px; height: 22px;"> <!-- APPLICANT'S SIGNATURE -->
-      <input type="text" class="fill-input" style="top: 642px; left: 268px; width: 388px; height: 22px;"> <!-- VISA VALIDITY DATE -->
+      <!-- Text Inputs (Correctly Aligned on lines) -->
+      <input type="text" class="clean-input" style="top: 295px; left: 295px; width: 380px; height: 20px;"> <!-- APPLICANT'S FULL NAME -->
+      <input type="text" class="clean-input" style="top: 331px; left: 295px; width: 380px; height: 20px;"> <!-- NATIONALITY -->
+      <input type="text" class="clean-input" style="top: 367px; left: 295px; width: 380px; height: 20px;"> <!-- PROFESSION -->
+      <input type="text" class="clean-input" style="top: 403px; left: 295px; width: 380px; height: 20px;"> <!-- PASSPORT NO -->
+      <input type="text" class="clean-input" style="top: 439px; left: 295px; width: 380px; height: 20px;"> <!-- UID NO -->
+      <input type="text" class="clean-input" style="top: 475px; left: 295px; width: 380px; height: 20px;"> <!-- EMIRATES ID NO -->
+      <input type="text" class="clean-input" style="top: 511px; left: 295px; width: 380px; height: 20px;"> <!-- COMPANY NAME -->
+      <input type="text" class="clean-input" style="top: 547px; left: 295px; width: 380px; height: 20px;"> <!-- COMPANY ADDRESS & TEL -->
+      <input type="text" class="clean-input" style="top: 583px; left: 295px; width: 380px; height: 20px;"> <!-- APPLICANT'S MOBILE NO -->
+      <input type="text" class="clean-input" style="top: 619px; left: 295px; width: 380px; height: 20px;"> <!-- REASON FOR PASS -->
+      <input type="text" class="clean-input" style="top: 655px; left: 295px; width: 380px; height: 20px;"> <!-- DATE OF APPLICATION -->
+      <input type="text" class="clean-input" style="top: 691px; left: 295px; width: 380px; height: 20px;"> <!-- APPLICANT'S SIGNATURE -->
+      <input type="text" class="clean-input" style="top: 727px; left: 295px; width: 380px; height: 20px;"> <!-- VISA VALIDITY DATE -->
 
-      <!-- Port Pass Period Checkboxes -->
-      <input type="checkbox" class="fill-checkbox" style="top: 668px; left: 291px;"> <!-- WEEK -->
-      <input type="checkbox" class="fill-checkbox" style="top: 668px; left: 515px;"> <!-- MONTH -->
-      <input type="checkbox" class="fill-checkbox" style="top: 668px; left: 671px;"> <!-- YEAR -->
+      <!-- Period Checkboxes -->
+      <input type="checkbox" class="clean-checkbox" style="top: 752px; left: 274px;"> <!-- WEEK -->
+      <input type="checkbox" class="clean-checkbox" style="top: 752px; left: 485px;"> <!-- MONTH -->
+      <input type="checkbox" class="clean-checkbox" style="top: 752px; left: 632px;"> <!-- YEAR -->
 
-      <!-- Port Pass Validity Inputs -->
-      <input type="text" class="fill-input" style="top: 698px; left: 228px; width: 90px; height: 22px;"> <!-- FROM -->
-      <input type="text" class="fill-input" style="top: 698px; left: 352px; width: 90px; height: 22px;"> <!-- TO -->
+      <!-- Validity Inputs -->
+      <input type="text" class="clean-input" style="top: 792px; left: 253px; width: 92px; height: 20px;"> <!-- FROM -->
+      <input type="text" class="clean-input" style="top: 792px; left: 388px; width: 92px; height: 20px;"> <!-- TO -->
     </div>
   </div>
 
-
-  <!-- PAGE 2 CONTAINER -->
+  <!-- PAGE 2 -->
   <div class="page-container">
-    <!-- Background Image 2 (Replace 'GATE PASS13081_page-0002.jpg' with your image name/path) -->
     <img src="GATE PASS13081_page-0002.jpg" class="bg-image" alt="Port Pass Page 2">
-
-    <!-- Page 2 has Requirements and Terms (Read-Only / No Editable Inputs needed normally) -->
-    <div class="overlay-form">
-      <!-- Add extra inputs here if needed for Page 2 in future -->
-    </div>
   </div>
 
   <script>
-    // Handle Photo Preview inside form overlay
     function loadPhoto(event) {
       const reader = new FileReader();
       reader.onload = function(){
@@ -233,7 +211,9 @@
         img.src = reader.result;
         img.style.display = 'block';
       };
-      reader.readAsDataURL(event.target.files[0]);
+      if(event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   </script>
 </body>
