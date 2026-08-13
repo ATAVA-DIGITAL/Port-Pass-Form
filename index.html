@@ -3,396 +3,235 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Application for Port Pass - UAQ</title>
+  <title>Port Pass Fillable Form Overlay</title>
   <style>
     * {
       box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
     }
     body {
-      background-color: #f4f7f6;
+      background-color: #525659;
       margin: 0;
-      padding: 20px;
-    }
-    .form-container {
-      max-width: 850px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 30px;
-      border: 1px solid #ccc;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #000;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-    .header-title {
-      text-align: center;
-    }
-    .header-title h2 {
-      margin: 0;
-      font-size: 18px;
-      color: #0d47a1;
-    }
-    .header-title h3 {
-      margin: 5px 0 0 0;
-      font-size: 14px;
-      color: #333;
-    }
-    .title-banner {
-      text-align: center;
-      margin: 15px 0;
-    }
-    .title-banner h1 {
-      margin: 0;
-      font-size: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .title-banner h2 {
-      margin: 2px 0 0 0;
-      font-size: 18px;
-      font-weight: normal;
-    }
-
-    /* Top Section (Photo + Location Checkboxes) */
-    .top-section {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    .photo-box {
-      width: 140px;
-      height: 160px;
-      border: 2px dashed #888;
+      padding: 20px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 12px;
-      background: #fafafa;
-      position: relative;
+      font-family: Arial, sans-serif;
     }
-    .photo-box input[type="file"] {
+
+    /* Page Container representing A4 Aspect Ratio */
+    .page-container {
+      position: relative;
+      width: 850px;
+      height: 1120px;
+      margin-bottom: 30px;
+      background-color: #fff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    /* Original Background Images */
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* Overlay Layer for Form Inputs */
+    .overlay-form {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    /* Standard Text Input Fields */
+    .fill-input {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.2); /* Slightly visible on screen, easy to locate */
+      border: 1px dashed #2196F3; /* Visual guide during typing */
+      font-size: 14px;
+      font-weight: bold;
+      color: #000;
+      padding: 2px 5px;
+      outline: none;
+    }
+
+    .fill-input:focus {
+      background: #ffffff;
+      border: 1px solid #000;
+    }
+
+    /* Custom Positioned Checkboxes */
+    .fill-checkbox {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #000;
+    }
+
+    /* Photo Upload Box Overlay */
+    .photo-overlay {
+      position: absolute;
+      top: 128px;
+      left: 68px;
+      width: 100px;
+      height: 120px;
+      border: 1px dashed #2196F3;
+      background: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .photo-overlay input[type="file"] {
       position: absolute;
       width: 100%;
       height: 100%;
       opacity: 0;
       cursor: pointer;
     }
-    .checkbox-grid {
-      flex: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .photo-overlay img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Top Control Panel */
+    .controls {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 100;
+      display: flex;
       gap: 10px;
-      align-content: center;
-      border: 1px solid #ddd;
-      padding: 10px;
-      background: #fafafa;
     }
-    .checkbox-item {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      font-weight: bold;
-    }
-    .checkbox-item input {
-      margin-right: 6px;
-      transform: scale(1.2);
-    }
-
-    /* Form Fields */
-    .field-row {
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .field-label {
-      width: 260px;
-      font-size: 13px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-    .field-label span {
-      display: block;
-      font-size: 12px;
-      font-weight: normal;
-      color: #555;
-    }
-    .field-input {
-      flex: 1;
-    }
-    .field-input input[type="text"],
-    .field-input input[type="date"] {
-      width: 100%;
-      padding: 6px 8px;
+    .btn {
+      padding: 10px 20px;
+      background-color: #008CBA;
+      color: white;
       border: none;
-      border-bottom: 1px solid #000;
-      font-size: 14px;
-      outline: none;
-      background: transparent;
-    }
-    .field-input input:focus {
-      border-bottom: 2px solid #0d47a1;
-    }
-
-    /* Period & Validity Row */
-    .inline-group {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .period-boxes {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-
-    /* Declaration */
-    .declaration {
-      margin-top: 20px;
-      border-top: 1px solid #ccc;
-      padding-top: 10px;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .declaration strong {
-      display: block;
-      font-size: 13px;
-    }
-
-    /* Signatures Section */
-    .stamps-section {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-      text-align: center;
-      font-size: 11px;
+      font-size: 15px;
       font-weight: bold;
-    }
-    .stamp-box {
-      width: 30%;
-      border-top: 1px solid #000;
-      padding-top: 5px;
-    }
-
-    /* Print Controls */
-    .print-btn {
-      display: block;
-      width: 100%;
-      max-width: 850px;
-      margin: 0 auto 15px auto;
-      padding: 12px;
-      background: #0d47a1;
-      color: #fff;
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 5px;
       cursor: pointer;
-      border-radius: 4px;
-      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
-    
+    .btn:hover {
+      background-color: #005f7f;
+    }
+
+    /* PRINT STYLES - Hides input borders & control buttons */
     @media print {
       body {
         background: none;
         padding: 0;
       }
-      .form-container {
-        border: none;
+      .controls {
+        display: none;
+      }
+      .page-container {
         box-shadow: none;
-        padding: 0;
+        page-break-after: always;
+        margin: 0;
         width: 100%;
+        height: 100vh;
       }
-      .print-btn {
-        display: none;
+      .fill-input {
+        background: transparent !important;
+        border: none !important;
       }
-      .photo-box input {
-        display: none;
+      .photo-overlay {
+        border: none !important;
+        background: transparent !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  <!-- Fixed Top Print Button -->
+  <div class="controls">
+    <button class="btn" onclick="window.print()">Print / Save PDF</button>
+  </div>
 
-  <div class="form-container">
-    
-    <!-- Header -->
-    <div class="header">
-      <div>
-        <strong style="color: #0056b3; font-size: 18px;">HUTCHISONPORTS</strong><br>
-        <span style="font-weight: bold; font-size: 22px;">UAQ</span>
+  <!-- PAGE 1 CONTAINER -->
+  <div class="page-container">
+    <!-- Background Image 1 (Replace 'GATE PASS13081_page-0001.jpg' with your image name/path) -->
+    <img src="GATE PASS13081_page-0001.jpg" class="bg-image" alt="Port Pass Page 1">
+
+    <div class="overlay-form">
+      <!-- Photo Field -->
+      <div class="photo-overlay">
+        <span style="font-size: 10px; text-align:center;">Click to<br>Upload</span>
+        <img id="imgPreview" style="display:none;">
+        <input type="file" accept="image/*" onchange="loadPhoto(event)">
       </div>
-      <div class="header-title">
-        <h2>هاتشيسون الموانئ ام القيوين المحدودة</h2>
-        <h2>Hutchison Ports UAQ Limited</h2>
-        <h3>Ahmed Bin Rashid Port, Umm Al Quwain<br>United Arab Emirates</h3>
-      </div>
-      <div style="text-align: right;">
-        <strong style="font-size: 16px;">حكومة ام القيوين</strong><br>
-        <span style="font-size: 11px;">GOVERNMENT OF UMM ALQUWAIN</span>
-      </div>
+
+      <!-- Top Location Checkboxes -->
+      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 245px;"> <!-- QUAY -->
+      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 364px;"> <!-- WAREHOUSE -->
+      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 501px;"> <!-- COMPANY -->
+      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 648px;"> <!-- RORO YARD -->
+      <input type="checkbox" class="fill-checkbox" style="top: 174px; left: 810px;"> <!-- POLICE -->
+
+      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 245px;"> <!-- CONTAINER YARD -->
+      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 418px;"> <!-- IMIGRATION -->
+      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 546px;"> <!-- SHIP -->
+      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 686px;"> <!-- ALL PLACES -->
+      <input type="checkbox" class="fill-checkbox" style="top: 228px; left: 835px;"> <!-- DU TOWER -->
+
+      <!-- Main Text Inputs (Aligned Exactly over Form Lines) -->
+      <input type="text" class="fill-input" style="top: 262px; left: 268px; width: 388px; height: 22px;"> <!-- APPLICANT'S FULL NAME -->
+      <input type="text" class="fill-input" style="top: 295px; left: 268px; width: 388px; height: 22px;"> <!-- NATIONALITY -->
+      <input type="text" class="fill-input" style="top: 327px; left: 268px; width: 388px; height: 22px;"> <!-- PROFESSION -->
+      <input type="text" class="fill-input" style="top: 358px; left: 268px; width: 388px; height: 22px;"> <!-- PASSPORT NO -->
+      <input type="text" class="fill-input" style="top: 390px; left: 268px; width: 388px; height: 22px;"> <!-- UID NO -->
+      <input type="text" class="fill-input" style="top: 422px; left: 268px; width: 388px; height: 22px;"> <!-- EMIRATES ID NO -->
+      <input type="text" class="fill-input" style="top: 454px; left: 268px; width: 388px; height: 22px;"> <!-- COMPANY NAME -->
+      <input type="text" class="fill-input" style="top: 485px; left: 268px; width: 388px; height: 22px;"> <!-- COMPANY ADDRESS & TEL -->
+      <input type="text" class="fill-input" style="top: 517px; left: 268px; width: 388px; height: 22px;"> <!-- APPLICANT'S MOBILE NO -->
+      <input type="text" class="fill-input" style="top: 548px; left: 268px; width: 388px; height: 22px;"> <!-- REASON FOR PASS -->
+      <input type="text" class="fill-input" style="top: 580px; left: 268px; width: 388px; height: 22px;"> <!-- DATE OF APPLICATION -->
+      <input type="text" class="fill-input" style="top: 611px; left: 268px; width: 388px; height: 22px;"> <!-- APPLICANT'S SIGNATURE -->
+      <input type="text" class="fill-input" style="top: 642px; left: 268px; width: 388px; height: 22px;"> <!-- VISA VALIDITY DATE -->
+
+      <!-- Port Pass Period Checkboxes -->
+      <input type="checkbox" class="fill-checkbox" style="top: 668px; left: 291px;"> <!-- WEEK -->
+      <input type="checkbox" class="fill-checkbox" style="top: 668px; left: 515px;"> <!-- MONTH -->
+      <input type="checkbox" class="fill-checkbox" style="top: 668px; left: 671px;"> <!-- YEAR -->
+
+      <!-- Port Pass Validity Inputs -->
+      <input type="text" class="fill-input" style="top: 698px; left: 228px; width: 90px; height: 22px;"> <!-- FROM -->
+      <input type="text" class="fill-input" style="top: 698px; left: 352px; width: 90px; height: 22px;"> <!-- TO -->
     </div>
+  </div>
 
-    <!-- Title -->
-    <div class="title-banner">
-      <h2>طلب تصريح دخول ميناء</h2>
-      <h1>APPLICATION FOR PORT PASS</h1>
+
+  <!-- PAGE 2 CONTAINER -->
+  <div class="page-container">
+    <!-- Background Image 2 (Replace 'GATE PASS13081_page-0002.jpg' with your image name/path) -->
+    <img src="GATE PASS13081_page-0002.jpg" class="bg-image" alt="Port Pass Page 2">
+
+    <!-- Page 2 has Requirements and Terms (Read-Only / No Editable Inputs needed normally) -->
+    <div class="overlay-form">
+      <!-- Add extra inputs here if needed for Page 2 in future -->
     </div>
-
-    <!-- Photo and Location Checkboxes -->
-    <div class="top-section">
-      <div class="photo-box" id="photoContainer">
-        <span id="photoText">Upload Photo<br>(انقر لتحميل الصورة)</span>
-        <img id="photoPreview" style="display:none; width:100%; height:100%; object-fit:cover;">
-        <input type="file" accept="image/*" onchange="previewImage(event)">
-      </div>
-
-      <div class="checkbox-grid">
-        <label class="checkbox-item"><input type="checkbox"> POLICE / الشرطة</label>
-        <label class="checkbox-item"><input type="checkbox"> RORO YARD / تخزين السيارات</label>
-        <label class="checkbox-item"><input type="checkbox"> COMPANY / الشركة</label>
-        <label class="checkbox-item"><input type="checkbox"> WAREHOUSE / المستودع</label>
-        <label class="checkbox-item"><input type="checkbox"> QUAY / الرصيف</label>
-        <label class="checkbox-item"><input type="checkbox"> DU TOWER / برج دو</label>
-        <label class="checkbox-item"><input type="checkbox"> CONTAINER YARD / الحاويات</label>
-        <label class="checkbox-item"><input type="checkbox"> IMIGRATION / الجوازات</label>
-        <label class="checkbox-item"><input type="checkbox"> SHIP / السفن</label>
-        <label class="checkbox-item" style="grid-column: span 2;"><input type="checkbox"> ALL PLACES / كل الأماكن</label>
-      </div>
-    </div>
-
-    <!-- Form Fields -->
-    <form>
-      <div class="field-row">
-        <div class="field-label">APPLICANT'S FULL NAME <span>الاسم الكامل</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">NATIONALITY <span>الجنسية</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">PROFESSION <span>الوظيفة</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">PASSPORT NO <span>رقم جواز السفر</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">UID NO <span>الرقم الموحد</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">EMIRATES ID NO <span>رقم الهوية</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">COMPANY NAME (As per Visa) <span>اسم الشركة (حسب التأشيرة)</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">COMPANY ADDRESS & TEL NO <span>عنوان الشركة و رقم هاتفها</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">APPLICANT'S MOBILE NO <span>رقم هاتف مقدم الطلب</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">REASON FOR PASS <span>الغرض من الدخول</span></div>
-        <div class="field-input"><input type="text"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">DATE OF APPLICATION <span>تاريخ الطلب</span></div>
-        <div class="field-input"><input type="date"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">APPLICANT'S SIGNATURE <span>توقيع مقدم الطلب</span></div>
-        <div class="field-input"><input type="text" placeholder="Sign here or leave blank for manual signature"></div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">APPLICANT'S VISA VALIDITY DATE <span>تاريخ صلاحية التأشيرة</span></div>
-        <div class="field-input"><input type="date"></div>
-      </div>
-
-      <!-- Port Pass Period & Validity -->
-      <div class="field-row">
-        <div class="field-label">PORT PASS PERIOD:</div>
-        <div class="field-input period-boxes">
-          <label><input type="checkbox"> WEEK / اسبوع</label>
-          <label><input type="checkbox"> MONTH / شهر</label>
-          <label><input type="checkbox"> YEAR / سنة</label>
-        </div>
-      </div>
-
-      <div class="field-row">
-        <div class="field-label">PORT PASS VALIDITY: <span>مدة صلاحية التصريح</span></div>
-        <div class="field-input inline-group" style="margin-bottom:0;">
-          FROM: <input type="date" style="width: 180px;">
-          TO: <input type="date" style="width: 180px;">
-        </div>
-      </div>
-
-      <!-- Declaration -->
-      <div class="declaration">
-        <strong>Declaration / تعهد:</strong>
-        We undertake all responsibility for our above staff, during his/her stay and activity inside Ahmed Bin Rashid Port and we hereby declare that we will not hold anyone responsible towards issuing port pass to our staff.
-        <br>
-        <span dir="rtl" style="display:block; text-align:right; margin-top:4px;">
-          نحن نتحمل كافة المسؤولية عن موظفينا المذكورين أعلاه وعن أنشطتهم خلال زيارتهم لميناء أحمد بن راشد و نتعهد بالالتزام بذلك.
-        </span>
-      </div>
-
-      <!-- Signatures Bottom -->
-      <div class="stamps-section">
-        <div class="stamp-box">
-          ختم الشركة وتوقيعها<br>
-          APPLICANT'S COMPANY STAMP & SIGNATURE
-        </div>
-        <div class="stamp-box">
-          مشرف قسم تصاريح الدخول<br>
-          GATE PASS SECTION INSPECTOR
-        </div>
-        <div class="stamp-box">
-          قسم الأمن والسلامة<br>
-          SECURITY & SAFETY SECTION
-        </div>
-      </div>
-
-    </form>
   </div>
 
   <script>
-    function previewImage(event) {
+    // Handle Photo Preview inside form overlay
+    function loadPhoto(event) {
       const reader = new FileReader();
-      reader.onload = function() {
-        const output = document.getElementById('photoPreview');
-        const text = document.getElementById('photoText');
-        output.src = reader.result;
-        output.style.display = 'block';
-        text.style.display = 'none';
+      reader.onload = function(){
+        const img = document.getElementById('imgPreview');
+        img.src = reader.result;
+        img.style.display = 'block';
       };
       reader.readAsDataURL(event.target.files[0]);
     }
