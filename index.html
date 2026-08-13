@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Form - Perfect Lock Fix</title>
+  <title>Port Pass Form - Perfect Coordinate Lock</title>
   <style>
     * {
       box-sizing: border-box;
@@ -18,7 +18,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Standard A4 Aspect Ratio Container */
     .page-container {
       position: relative;
       width: 794px;
@@ -28,7 +27,6 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
 
-    /* Background Image */
     .bg-image {
       position: absolute;
       top: 0;
@@ -38,7 +36,6 @@
       z-index: 1;
     }
 
-    /* Form Overlays */
     .overlay-form {
       position: absolute;
       top: 0;
@@ -48,7 +45,6 @@
       z-index: 2;
     }
 
-    /* Inputs Styling */
     .clean-input {
       position: absolute;
       background: transparent;
@@ -74,7 +70,6 @@
       accent-color: #000;
     }
 
-    /* Photo Upload Area */
     .photo-overlay {
       position: absolute;
       top: 142px;
@@ -99,7 +94,6 @@
       object-fit: cover;
     }
 
-    /* Control Button */
     .controls {
       position: fixed;
       top: 15px;
@@ -118,7 +112,6 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    /* HARD HARDWARE PRINT LOCK ENGINE (A4 Physical Dimensions) */
     @page {
       size: A4 portrait;
       margin: 0mm !important;
@@ -186,7 +179,7 @@
       <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 555px;"> <!-- ALL PLACES -->
       <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 673px;"> <!-- DU TOWER -->
 
-      <!-- Text Inputs for Form Lines -->
+      <!-- Main Form Line Inputs -->
       <input type="text" class="clean-input" style="top: 288px; left: 250px; width: 360px;"> <!-- FULL NAME -->
       <input type="text" class="clean-input" style="top: 323px; left: 250px; width: 360px;"> <!-- NATIONALITY -->
       <input type="text" class="clean-input" style="top: 358px; left: 250px; width: 360px;"> <!-- PROFESSION -->
@@ -201,14 +194,14 @@
       <input type="text" class="clean-input" style="top: 673px; left: 250px; width: 360px;"> <!-- SIGNATURE -->
       <input type="text" class="clean-input" style="top: 708px; left: 250px; width: 360px;"> <!-- VISA VALIDITY DATE -->
 
-      <!-- Bottom Period Text Inputs (Placed right inside the white boxes) -->
-      <input type="text" class="clean-input" style="top: 736px; left: 295px; width: 65px; text-align: center;"> <!-- WEEK -->
-      <input type="text" class="clean-input" style="top: 736px; left: 512px; width: 65px; text-align: center;"> <!-- MONTH -->
-      <input type="text" class="clean-input" style="top: 736px; left: 668px; width: 50px; text-align: center;"> <!-- YEAR -->
+      <!-- Corrected PORT PASS PERIOD Boxes (Week, Month, Year Inputs inside white boxes) -->
+      <input type="text" class="clean-input" style="top: 728px; left: 295px; width: 45px; height: 22px; text-align: center;"> <!-- WEEK -->
+      <input type="text" class="clean-input" style="top: 728px; left: 512px; width: 45px; height: 22px; text-align: center;"> <!-- MONTH -->
+      <input type="text" class="clean-input" style="top: 728px; left: 668px; width: 45px; height: 22px; text-align: center;"> <!-- YEAR -->
 
-      <!-- Validity Dates From/To Boxes -->
-      <input type="text" class="clean-input" style="top: 771px; left: 272px; width: 105px; text-align: center;"> <!-- FROM -->
-      <input type="text" class="clean-input" style="top: 771px; left: 415px; width: 105px; text-align: center;"> <!-- TO -->
+      <!-- Corrected PORT PASS VALIDITY Boxes (FROM / TO Inputs) -->
+      <input type="text" class="clean-input" style="top: 760px; left: 272px; width: 102px; height: 24px; text-align: center;"> <!-- FROM -->
+      <input type="text" class="clean-input" style="top: 760px; left: 415px; width: 102px; height: 24px; text-align: center;"> <!-- TO -->
     </div>
   </div>
 
