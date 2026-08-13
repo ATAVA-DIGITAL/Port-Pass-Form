@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Form - Absolute Exact Alignment</title>
+  <title>Port Pass Form - Visual Drag & Drop Alignment</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       background-color: #333;
       margin: 0;
@@ -50,17 +48,13 @@
     .clean-input {
       position: absolute;
       background: transparent;
-      border: none;
+      border: 1px dashed transparent;
       font-size: 13.5px;
       font-weight: bold;
       color: #000;
       outline: none;
       padding: 0 2px;
       font-family: Arial, sans-serif;
-    }
-
-    .clean-input:focus {
-      background: rgba(255, 255, 180, 0.5);
     }
 
     .clean-checkbox {
@@ -72,28 +66,12 @@
       accent-color: #000;
     }
 
-    .photo-overlay {
-      position: absolute;
-      top: 142px;
-      left: 70px;
-      width: 100px;
-      height: 115px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .photo-overlay input[type="file"] {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
-    }
-    .photo-overlay img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    /* Dragging Mode Styles */
+    body.drag-mode .clean-checkbox,
+    body.drag-mode .clean-input {
+      border: 1px solid red !important;
+      background: rgba(255, 0, 0, 0.2) !important;
+      cursor: move !important;
     }
 
     .controls {
@@ -101,125 +79,151 @@
       top: 15px;
       right: 15px;
       z-index: 100;
+      display: flex;
+      gap: 10px;
     }
     .btn {
-      padding: 10px 20px;
+      padding: 10px 16px;
       background-color: #0d47a1;
       color: white;
       border: none;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       border-radius: 4px;
       cursor: pointer;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
+    .btn-toggle { background-color: #d32f2f; }
 
-    @page {
-      size: A4 portrait;
-      margin: 0mm !important;
+    #codeOutput {
+      width: 794px;
+      height: 200px;
+      margin-bottom: 50px;
+      display: none;
     }
 
+    @page { size: A4 portrait; margin: 0mm !important; }
+
     @media print {
-      html, body {
-        width: 210mm !important;
-        height: 297mm !important;
-        background: white !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .controls {
-        display: none !important;
-      }
-      .page-container {
-        width: 210mm !important;
-        height: 297mm !important;
-        position: relative !important;
-        margin: 0 !important;
-        box-shadow: none !important;
-        page-break-after: always !important;
-        page-break-inside: avoid !important;
-      }
-      .clean-input:focus {
-        background: transparent !important;
-      }
+      body { background: white !important; }
+      .controls, #codeOutput { display: none !important; }
+      .page-container { margin: 0 !important; box-shadow: none !important; }
     }
   </style>
 </head>
 <body>
 
   <div class="controls">
-    <button class="btn" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn btn-toggle" onclick="toggleDragMode()">🛠️ Drag Mode: OFF</button>
+    <button class="btn" onclick="generateCode()">💾 Get Updated CSS Code</button>
+    <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
   </div>
 
   <!-- PAGE 1 -->
-  <div class="page-container">
+  <div class="page-container" id="page1">
     <img src="GATE PASS13081_page-0001.jpg" class="bg-image" alt="Port Pass Page 1">
 
     <div class="overlay-form">
-      <!-- Photo Area -->
-      <div class="photo-overlay">
-        <img id="imgPreview" style="display:none;">
-        <input type="file" accept="image/*" title="Click to Upload Photo" onchange="loadPhoto(event)">
-      </div>
+      <!-- TOP ROW CHECKBOXES -->
+      <input type="checkbox" id="cb_quay" class="clean-checkbox draggable" style="top: 215px; left: 200px;">
+      <input type="checkbox" id="cb_wh" class="clean-checkbox draggable" style="top: 215px; left: 300px;">
+      <input type="checkbox" id="cb_comp" class="clean-checkbox draggable" style="top: 215px; left: 400px;">
+      <input type="checkbox" id="cb_roro" class="clean-checkbox draggable" style="top: 215px; left: 500px;">
+      <input type="checkbox" id="cb_police" class="clean-checkbox draggable" style="top: 215px; left: 600px;">
 
-      <!-- TOP ROW CHECKBOXES (SHIFTED RIGHT TO FIT PERFECTLY) -->
-      <input type="checkbox" class="clean-checkbox" style="top: 215px; left: 260px;"> <!-- QUAY -->
-      <input type="checkbox" class="clean-checkbox" style="top: 215px; left: 382px;"> <!-- WAREHOUSE -->
-      <input type="checkbox" class="clean-checkbox" style="top: 215px; left: 512px;"> <!-- COMPANY -->
-      <input type="checkbox" class="clean-checkbox" style="top: 215px; left: 648px;"> <!-- RORO YARD -->
-      <input type="checkbox" class="clean-checkbox" style="top: 215px; left: 785px;"> <!-- POLICE -->
+      <!-- SECOND ROW CHECKBOXES -->
+      <input type="checkbox" id="cb_container" class="clean-checkbox draggable" style="top: 268px; left: 200px;">
+      <input type="checkbox" id="cb_immig" class="clean-checkbox draggable" style="top: 268px; left: 340px;">
+      <input type="checkbox" id="cb_ship" class="clean-checkbox draggable" style="top: 268px; left: 440px;">
+      <input type="checkbox" id="cb_all" class="clean-checkbox draggable" style="top: 268px; left: 550px;">
+      <input type="checkbox" id="cb_du" class="clean-checkbox draggable" style="top: 268px; left: 660px;">
 
-      <!-- SECOND ROW CHECKBOXES (SHIFTED RIGHT TO FIT PERFECTLY) -->
-      <input type="checkbox" class="clean-checkbox" style="top: 268px; left: 270px;"> <!-- CONTAINER YARD -->
-      <input type="checkbox" class="clean-checkbox" style="top: 268px; left: 436px;"> <!-- IMIGRATION -->
-      <input type="checkbox" class="clean-checkbox" style="top: 268px; left: 554px;"> <!-- SHIP -->
-      <input type="checkbox" class="clean-checkbox" style="top: 268px; left: 686px;"> <!-- ALL PLACES -->
-      <input type="checkbox" class="clean-checkbox" style="top: 268px; left: 830px;"> <!-- DU TOWER -->
+      <!-- TEXT INPUTS -->
+      <input type="text" id="inp_name" class="clean-input draggable" style="top: 312px; left: 250px; width: 360px;">
+      <input type="text" id="inp_nation" class="clean-input draggable" style="top: 348px; left: 250px; width: 360px;">
+      <input type="text" id="inp_prof" class="clean-input draggable" style="top: 383px; left: 250px; width: 360px;">
+      <input type="text" id="inp_pass" class="clean-input draggable" style="top: 418px; left: 250px; width: 360px;">
+      <input type="text" id="inp_uid" class="clean-input draggable" style="top: 453px; left: 250px; width: 360px;">
+      <input type="text" id="inp_eid" class="clean-input draggable" style="top: 488px; left: 250px; width: 360px;">
+      <input type="text" id="inp_cname" class="clean-input draggable" style="top: 523px; left: 250px; width: 360px;">
+      <input type="text" id="inp_cadd" class="clean-input draggable" style="top: 558px; left: 250px; width: 360px;">
+      <input type="text" id="inp_mob" class="clean-input draggable" style="top: 593px; left: 250px; width: 360px;">
+      <input type="text" id="inp_reason" class="clean-input draggable" style="top: 628px; left: 250px; width: 360px;">
+      <input type="text" id="inp_date" class="clean-input draggable" style="top: 663px; left: 250px; width: 360px;">
+      <input type="text" id="inp_sign" class="clean-input draggable" style="top: 698px; left: 250px; width: 360px;">
+      <input type="text" id="inp_visa" class="clean-input draggable" style="top: 733px; left: 250px; width: 360px;">
 
-      <!-- MAIN TEXT FIELD LINES -->
-      <input type="text" class="clean-input" style="top: 312px; left: 250px; width: 360px;"> <!-- FULL NAME -->
-      <input type="text" class="clean-input" style="top: 348px; left: 250px; width: 360px;"> <!-- NATIONALITY -->
-      <input type="text" class="clean-input" style="top: 383px; left: 250px; width: 360px;"> <!-- PROFESSION -->
-      <input type="text" class="clean-input" style="top: 418px; left: 250px; width: 360px;"> <!-- PASSPORT NO -->
-      <input type="text" class="clean-input" style="top: 453px; left: 250px; width: 360px;"> <!-- UID NO -->
-      <input type="text" class="clean-input" style="top: 488px; left: 250px; width: 360px;"> <!-- EMIRATES ID NO -->
-      <input type="text" class="clean-input" style="top: 523px; left: 250px; width: 360px;"> <!-- COMPANY NAME -->
-      <input type="text" class="clean-input" style="top: 558px; left: 250px; width: 360px;"> <!-- ADDRESS & TEL NO -->
-      <input type="text" class="clean-input" style="top: 593px; left: 250px; width: 360px;"> <!-- MOBILE NO -->
-      <input type="text" class="clean-input" style="top: 628px; left: 250px; width: 360px;"> <!-- REASON FOR PASS -->
-      <input type="text" class="clean-input" style="top: 663px; left: 250px; width: 360px;"> <!-- DATE OF APPLICATION -->
-      <input type="text" class="clean-input" style="top: 698px; left: 250px; width: 360px;"> <!-- SIGNATURE -->
-      <input type="text" class="clean-input" style="top: 733px; left: 250px; width: 360px;"> <!-- VISA VALIDITY DATE -->
+      <!-- BOTTOM BOXES -->
+      <input type="text" id="inp_week" class="clean-input draggable" style="top: 792px; left: 250px; width: 45px; height: 18px; text-align: center;">
+      <input type="text" id="inp_month" class="clean-input draggable" style="top: 792px; left: 400px; width: 45px; height: 18px; text-align: center;">
+      <input type="text" id="inp_year" class="clean-input draggable" style="top: 792px; left: 550px; width: 45px; height: 18px; text-align: center;">
 
-      <!-- BOTTOM BOXES: DROPPED DOWN DIRECTLY INTO BOXES -->
-      <input type="text" class="clean-input" style="top: 792px; left: 298px; width: 45px; height: 18px; text-align: center;"> <!-- WEEK -->
-      <input type="text" class="clean-input" style="top: 792px; left: 518px; width: 45px; height: 18px; text-align: center;"> <!-- MONTH -->
-      <input type="text" class="clean-input" style="top: 792px; left: 673px; width: 45px; height: 18px; text-align: center;"> <!-- YEAR -->
-
-      <!-- BOTTOM BOXES: FROM / TO -->
-      <input type="text" class="clean-input" style="top: 830px; left: 272px; width: 104px; height: 20px; text-align: center;"> <!-- FROM -->
-      <input type="text" class="clean-input" style="top: 830px; left: 416px; width: 104px; height: 20px; text-align: center;"> <!-- TO -->
+      <input type="text" id="inp_from" class="clean-input draggable" style="top: 830px; left: 220px; width: 104px; height: 20px; text-align: center;">
+      <input type="text" id="inp_to" class="clean-input draggable" style="top: 830px; left: 340px; width: 104px; height: 20px; text-align: center;">
     </div>
   </div>
 
-  <!-- PAGE 2 -->
-  <div class="page-container">
-    <img src="GATE PASS13081_page-0002.jpg" class="bg-image" alt="Port Pass Page 2">
-  </div>
+  <textarea id="codeOutput" placeholder="Click 'Get Updated CSS Code' to generate position coordinates..."></textarea>
 
   <script>
-    function loadPhoto(event) {
-      const reader = new FileReader();
-      reader.onload = function(){
-        const img = document.getElementById('imgPreview');
-        img.src = reader.result;
-        img.style.display = 'block';
-      };
-      if(event.target.files[0]) {
-        reader.readAsDataURL(event.target.files[0]);
+    let isDragMode = false;
+    let activeElement = null;
+    let offsetX = 0, offsetY = 0;
+
+    function toggleDragMode() {
+      isDragMode = !isDragMode;
+      const btn = document.querySelector('.btn-toggle');
+      if (isDragMode) {
+        document.body.classList.add('drag-mode');
+        btn.innerHTML = "🛠️ Drag Mode: ON (Click & Drag elements)";
+        btn.style.backgroundColor = "#2e7d32";
+        enableDragging();
+      } else {
+        document.body.classList.remove('drag-mode');
+        btn.innerHTML = "🛠️ Drag Mode: OFF";
+        btn.style.backgroundColor = "#d32f2f";
       }
+    }
+
+    function enableDragging() {
+      const draggables = document.querySelectorAll('.draggable');
+      draggables.forEach(el => {
+        el.onmousedown = function(e) {
+          if (!isDragMode) return;
+          e.preventDefault();
+          activeElement = el;
+          const rect = el.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+
+          document.onmousemove = function(e) {
+            if (!activeElement) return;
+            const parentRect = document.getElementById('page1').getBoundingClientRect();
+            let newLeft = e.clientX - parentRect.left - offsetX;
+            let newTop = e.clientY - parentRect.top - offsetY;
+
+            activeElement.style.left = newLeft + 'px';
+            activeElement.style.top = newTop + 'px';
+          };
+
+          document.onmouseup = function() {
+            activeElement = null;
+            document.onmousemove = null;
+          };
+        };
+      });
+    }
+
+    function generateCode() {
+      const draggables = document.querySelectorAll('.draggable');
+      let output = "";
+      draggables.forEach(el => {
+        output += `#${el.id} { top: ${el.style.top}; left: ${el.style.left}; }\n`;
+      });
+      const textarea = document.getElementById('codeOutput');
+      textarea.value = output;
+      textarea.style.display = 'block';
+      textarea.scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
