@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Form - Box Precision Alignment</title>
+  <title>Port Pass Form - Final Precision Fix</title>
   <style>
     * {
       box-sizing: border-box;
@@ -51,7 +51,7 @@
       position: absolute;
       background: transparent;
       border: none;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: bold;
       color: #000;
       outline: none;
@@ -158,7 +158,7 @@
     <img src="GATE PASS13081_page-0001.jpg" class="bg-image" alt="Port Pass Page 1">
 
     <div class="overlay-form">
-      <!-- Photo Area -->
+      <!-- Photo Field -->
       <div class="photo-overlay">
         <img id="imgPreview" style="display:none;">
         <input type="file" accept="image/*" title="Click to Upload Photo" onchange="loadPhoto(event)">
@@ -178,7 +178,7 @@
       <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 555px;"> <!-- ALL PLACES -->
       <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 673px;"> <!-- DU TOWER -->
 
-      <!-- Main Text Field Lines -->
+      <!-- Main Form Lines -->
       <input type="text" class="clean-input" style="top: 288px; left: 250px; width: 360px;"> <!-- FULL NAME -->
       <input type="text" class="clean-input" style="top: 323px; left: 250px; width: 360px;"> <!-- NATIONALITY -->
       <input type="text" class="clean-input" style="top: 358px; left: 250px; width: 360px;"> <!-- PROFESSION -->
@@ -193,14 +193,14 @@
       <input type="text" class="clean-input" style="top: 673px; left: 250px; width: 360px;"> <!-- SIGNATURE -->
       <input type="text" class="clean-input" style="top: 708px; left: 250px; width: 360px;"> <!-- VISA VALIDITY DATE -->
 
-      <!-- EXACTLY INSIDE THE BOXES: WEEK / MONTH / YEAR -->
-      <input type="text" class="clean-input" style="top: 737px; left: 298px; width: 50px; height: 20px; text-align: center;"> 
-      <input type="text" class="clean-input" style="top: 737px; left: 516px; width: 50px; height: 20px; text-align: center;"> 
-      <input type="text" class="clean-input" style="top: 737px; left: 672px; width: 50px; height: 20px; text-align: center;"> 
+      <!-- EXACT BOX ALIGNMENT: WEEK, MONTH, YEAR -->
+      <input type="text" class="clean-input" style="top: 730px; left: 236px; width: 38px; height: 18px; text-align: center;"> <!-- WEEK -->
+      <input type="text" class="clean-input" style="top: 730px; left: 410px; width: 38px; height: 18px; text-align: center;"> <!-- MONTH -->
+      <input type="text" class="clean-input" style="top: 730px; left: 532px; width: 38px; height: 18px; text-align: center;"> <!-- YEAR -->
 
-      <!-- EXACTLY INSIDE THE BOXES: FROM / TO -->
-      <input type="text" class="clean-input" style="top: 775px; left: 272px; width: 105px; height: 22px; text-align: center;"> 
-      <input type="text" class="clean-input" style="top: 775px; left: 416px; width: 105px; height: 22px; text-align: center;"> 
+      <!-- EXACT BOX ALIGNMENT: FROM / TO -->
+      <input type="text" class="clean-input" style="top: 762px; left: 216px; width: 82px; height: 20px; text-align: center;"> <!-- FROM -->
+      <input type="text" class="clean-input" style="top: 762px; left: 332px; width: 82px; height: 20px; text-align: center;"> <!-- TO -->
     </div>
   </div>
 
