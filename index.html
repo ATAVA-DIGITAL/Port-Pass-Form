@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Form Overlay - Perfect Visual Alignment</title>
+  <title>Port Pass Form - Perfect Print & Screen Alignment</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
-      background-color: #333333;
+      background-color: #333;
       margin: 0;
       padding: 20px 0;
       display: flex;
@@ -18,17 +18,18 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Fixed A4 Page Container */
+    /* Fixed Standard A4 Container */
     .page-container {
       position: relative;
-      width: 800px;
-      height: 1060px;
-      margin-bottom: 30px;
+      width: 794px;  /* Standard A4 Pixel Width at 96 DPI */
+      height: 1123px; /* Standard A4 Pixel Height at 96 DPI */
       background-color: #fff;
       box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      margin-bottom: 30px;
+      overflow: hidden;
     }
 
-    /* Background Form Image */
+    /* Background Image */
     .bg-image {
       position: absolute;
       top: 0;
@@ -38,7 +39,7 @@
       z-index: 1;
     }
 
-    /* Form Inputs Overlay */
+    /* Overlay Layer */
     .overlay-form {
       position: absolute;
       top: 0;
@@ -48,7 +49,7 @@
       z-index: 2;
     }
 
-    /* Inputs Slipped Cleanly Over Lines */
+    /* Text Inputs Over Lines */
     .clean-input {
       position: absolute;
       background: transparent;
@@ -75,13 +76,13 @@
       accent-color: #000;
     }
 
-    /* Photo Upload Box */
+    /* Photo Area Overlay */
     .photo-overlay {
       position: absolute;
-      top: 135px;
-      left: 65px;
-      width: 98px;
-      height: 108px;
+      top: 142px;
+      left: 68px;
+      width: 100px;
+      height: 114px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -100,7 +101,7 @@
       object-fit: cover;
     }
 
-    /* Print Controls */
+    /* Controls */
     .controls {
       position: fixed;
       top: 15px;
@@ -119,14 +120,16 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    /* PRINT CLEANUP: Strips headers, footers and page margins */
+    /* PRINT ENGINE FIX: Keeps 100% exact alignment on paper as on screen */
     @page {
       size: A4 portrait;
       margin: 0;
     }
 
     @media print {
-      body {
+      html, body {
+        width: 794px;
+        height: 1123px;
         background: none;
         padding: 0;
         margin: 0;
@@ -138,8 +141,9 @@
         box-shadow: none;
         page-break-after: always;
         margin: 0;
-        width: 100%;
-        height: 100vh;
+        width: 794px;
+        height: 1123px;
+        position: relative;
       }
       .clean-input:focus {
         background: transparent;
@@ -164,47 +168,43 @@
         <input type="file" accept="image/*" title="Click to Upload Photo" onchange="loadPhoto(event)">
       </div>
 
-      <!-- Row 1 Checkboxes -->
-      <input type="checkbox" class="clean-checkbox" style="top: 187px; left: 195px;"> <!-- QUAY -->
-      <input type="checkbox" class="clean-checkbox" style="top: 187px; left: 297px;"> <!-- WAREHOUSE -->
-      <input type="checkbox" class="clean-checkbox" style="top: 187px; left: 400px;"> <!-- COMPANY -->
-      <input type="checkbox" class="clean-checkbox" style="top: 187px; left: 512px;"> <!-- RORO YARD -->
-      <input type="checkbox" class="clean-checkbox" style="top: 187px; left: 622px;"> <!-- POLICE -->
+      <!-- Top Row Checkboxes (Placed inside image boxes) -->
+      <input type="checkbox" class="clean-checkbox" style="top: 198px; left: 198px;"> <!-- QUAY -->
+      <input type="checkbox" class="clean-checkbox" style="top: 198px; left: 301px;"> <!-- WAREHOUSE -->
+      <input type="checkbox" class="clean-checkbox" style="top: 198px; left: 405px;"> <!-- COMPANY -->
+      <input type="checkbox" class="clean-checkbox" style="top: 198px; left: 517px;"> <!-- RORO YARD -->
+      <input type="checkbox" class="clean-checkbox" style="top: 198px; left: 627px;"> <!-- POLICE -->
 
-      <!-- Row 2 Checkboxes -->
-      <input type="checkbox" class="clean-checkbox" style="top: 236px; left: 204px;"> <!-- CONTAINER YARD -->
-      <input type="checkbox" class="clean-checkbox" style="top: 236px; left: 341px;"> <!-- IMIGRATION -->
-      <input type="checkbox" class="clean-checkbox" style="top: 236px; left: 442px;"> <!-- SHIP -->
-      <input type="checkbox" class="clean-checkbox" style="top: 236px; left: 551px;"> <!-- ALL PLACES -->
-      <input type="checkbox" class="clean-checkbox" style="top: 236px; left: 668px;"> <!-- DU TOWER -->
+      <!-- Second Row Checkboxes -->
+      <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 208px;"> <!-- CONTAINER YARD -->
+      <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 345px;"> <!-- IMIGRATION -->
+      <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 446px;"> <!-- SHIP -->
+      <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 555px;"> <!-- ALL PLACES -->
+      <input type="checkbox" class="clean-checkbox" style="top: 250px; left: 673px;"> <!-- DU TOWER -->
 
-      <!-- Text Inputs (Precisely Repositioned over Underlines) -->
-      <input type="text" class="clean-input" style="top: 275px; left: 250px; width: 365px;"> <!-- APPLICANT'S FULL NAME -->
-      <input type="text" class="clean-input" style="top: 308px; left: 250px; width: 365px;"> <!-- NATIONALITY -->
-      <input type="text" class="clean-input" style="top: 341px; left: 250px; width: 365px;"> <!-- PROFESSION -->
-      <input type="text" class="clean-input" style="top: 374px; left: 250px; width: 365px;"> <!-- PASSPORT NO -->
-      <input type="text" class="clean-input" style="top: 407px; left: 250px; width: 365px;"> <!-- UID NO -->
-      <input type="text" class="clean-input" style="top: 440px; left: 250px; width: 365px;"> <!-- EMIRATES ID NO -->
-      <input type="text" class="clean-input" style="top: 473px; left: 250px; width: 365px;"> <!-- COMPANY NAME -->
-      <input type="text" class="clean-input" style="top: 506px; left: 250px; width: 365px;"> <!-- COMPANY ADDRESS & TEL NO -->
-      <input type="text" class="clean-input" style="top: 539px; left: 250px; width: 365px;"> <!-- APPLICANT'S MOBILE NO -->
-      <input type="text" class="clean-input" style="top: 572px; left: 250px; width: 365px;"> <!-- REASON FOR PASS -->
-      <input type="text" class="clean-input" style="top: 605px; left: 250px; width: 365px;"> <!-- DATE OF APPLICATION -->
-      <input type="text" class="clean-input" style="top: 638px; left: 250px; width: 365px;"> <!-- APPLICANT'S SIGNATURE -->
-      <input type="text" class="clean-input" style="top: 671px; left: 250px; width: 365px;"> <!-- VISA VALIDITY DATE -->
+      <!-- Text Inputs (Cleanly positioned on lines) -->
+      <input type="text" class="clean-input" style="top: 288px; left: 250px; width: 360px;"> <!-- APPLICANT'S FULL NAME -->
+      <input type="text" class="clean-input" style="top: 323px; left: 250px; width: 360px;"> <!-- NATIONALITY -->
+      <input type="text" class="clean-input" style="top: 358px; left: 250px; width: 360px;"> <!-- PROFESSION -->
+      <input type="text" class="clean-input" style="top: 393px; left: 250px; width: 360px;"> <!-- PASSPORT NO -->
+      <input type="text" class="clean-input" style="top: 428px; left: 250px; width: 360px;"> <!-- UID NO -->
+      <input type="text" class="clean-input" style="top: 463px; left: 250px; width: 360px;"> <!-- EMIRATES ID NO -->
+      <input type="text" class="clean-input" style="top: 498px; left: 250px; width: 360px;"> <!-- COMPANY NAME -->
+      <input type="text" class="clean-input" style="top: 533px; left: 250px; width: 360px;"> <!-- COMPANY ADDRESS & TEL NO -->
+      <input type="text" class="clean-input" style="top: 568px; left: 250px; width: 360px;"> <!-- APPLICANT'S MOBILE NO -->
+      <input type="text" class="clean-input" style="top: 603px; left: 250px; width: 360px;"> <!-- REASON FOR PASS -->
+      <input type="text" class="clean-input" style="top: 638px; left: 250px; width: 360px;"> <!-- DATE OF APPLICATION -->
+      <input type="text" class="clean-input" style="top: 673px; left: 250px; width: 360px;"> <!-- APPLICANT'S SIGNATURE -->
+      <input type="text" class="clean-input" style="top: 708px; left: 250px; width: 360px;"> <!-- VISA VALIDITY DATE -->
 
-      <!-- Period Checkboxes (Fixed position inside small boxes) -->
-      <input type="checkbox" class="clean-checkbox" style="top: 683px; left: 240px;"> <!-- WEEK -->
-      <input type="checkbox" class="clean-checkbox" style="top: 683px; left: 415px;"> <!-- MONTH -->
-      <input type="checkbox" class="clean-checkbox" style="top: 683px; left: 538px;"> <!-- YEAR -->
+      <!-- Bottom Period Checkboxes -->
+      <input type="checkbox" class="clean-checkbox" style="top: 742px; left: 285px;"> <!-- WEEK -->
+      <input type="checkbox" class="clean-checkbox" style="top: 742px; left: 458px;"> <!-- MONTH -->
+      <input type="checkbox" class="clean-checkbox" style="top: 742px; left: 588px;"> <!-- YEAR -->
 
-      <!-- Period Text Inputs (If user types period values instead of clicking) -->
-      <input type="text" class="clean-input" style="top: 680px; left: 258px; width: 45px; text-align: center;"> <!-- WEEK INPUT -->
-      <input type="text" class="clean-input" style="top: 680px; left: 433px; width: 45px; text-align: center;"> <!-- MONTH INPUT -->
-
-      <!-- Validity Period Dates (From & To inside bottom boxes) -->
-      <input type="text" class="clean-input" style="top: 721px; left: 222px; width: 80px; text-align: center;"> <!-- FROM -->
-      <input type="text" class="clean-input" style="top: 721px; left: 337px; width: 80px; text-align: center;"> <!-- TO -->
+      <!-- Bottom Period Text Inputs -->
+      <input type="text" class="clean-input" style="top: 785px; left: 220px; width: 85px; text-align: center;"> <!-- FROM -->
+      <input type="text" class="clean-input" style="top: 785px; left: 340px; width: 85px; text-align: center;"> <!-- TO -->
     </div>
   </div>
 
