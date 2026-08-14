@@ -61,19 +61,18 @@
       padding: 0 5px;
     }
 
-    /* Slight yellow highlight while typing only */
     .field:focus {
       background: rgba(255, 255, 0, 0.2);
     }
 
-    /* Transparent Checkbox Styling */
+    /* Exact Box Size Checkbox Styling */
     .chk {
       position: absolute;
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
       cursor: pointer;
       accent-color: #000;
-      opacity: 0.8;
+      margin: 0;
     }
 
     /* Photo Upload Box Positioning */
@@ -104,20 +103,20 @@
       z-index: 1;
     }
 
-    /* Checkbox Exact Coordinates */
-    .chk-police     { top: 17.2%; left: 78.5%; }
-    .chk-roro       { top: 17.2%; left: 62.7%; }
-    .chk-company    { top: 17.2%; left: 50.3%; }
-    .chk-warehouse  { top: 17.2%; left: 36.5%; }
-    .chk-quay       { top: 17.2%; left: 24.6%; }
+    /* --- Perfectly Aligned Checkbox Positions --- */
+    .chk-quay       { top: 17.5%; left: 25.0%; }
+    .chk-warehouse  { top: 17.5%; left: 37.1%; }
+    .chk-company    { top: 17.5%; left: 51.3%; }
+    .chk-roro       { top: 17.5%; left: 63.8%; }
+    .chk-police     { top: 17.5%; left: 79.5%; }
 
-    .chk-dutower    { top: 22.7%; left: 83.7%; }
-    .chk-allplaces  { top: 22.7%; left: 68.6%; }
-    .chk-ship       { top: 22.7%; left: 54.5%; }
-    .chk-imigration { top: 22.7%; left: 41.9%; }
-    .chk-container  { top: 22.7%; left: 24.6%; }
+    .chk-container  { top: 22.9%; left: 25.0%; }
+    .chk-imigration { top: 22.9%; left: 42.6%; }
+    .chk-ship       { top: 22.9%; left: 55.4%; }
+    .chk-allplaces  { top: 22.9%; left: 69.5%; }
+    .chk-dutower    { top: 22.9%; left: 84.6%; }
 
-    /* Text Lines Exact Positions */
+    /* Text Lines Positions */
     .field-fullname     { top: 26.0%; left: 31.5%; width: 45.5%; height: 2.2%; }
     .field-nationality  { top: 28.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
     .field-profession   { top: 31.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
@@ -177,18 +176,19 @@
       </div>
 
       <!-- Checkboxes -->
-      <input type="checkbox" class="chk chk-police" name="loc_police">
-      <input type="checkbox" class="chk chk-roro" name="loc_roro">
-      <input type="checkbox" class="chk chk-company" name="loc_company">
-      <input type="checkbox" class="chk chk-warehouse" name="loc_warehouse">
       <input type="checkbox" class="chk chk-quay" name="loc_quay">
+      <input type="checkbox" class="chk chk-warehouse" name="loc_warehouse">
+      <input type="checkbox" class="chk chk-company" name="loc_company">
+      <input type="checkbox" class="chk chk-roro" name="loc_roro">
+      <input type="checkbox" class="chk chk-police" name="loc_police">
+
       <input type="checkbox" class="chk chk-container" name="loc_container">
       <input type="checkbox" class="chk chk-imigration" name="loc_imigration">
       <input type="checkbox" class="chk chk-ship" name="loc_ship">
       <input type="checkbox" class="chk chk-allplaces" name="loc_allplaces">
       <input type="checkbox" class="chk chk-dutower" name="loc_dutower">
 
-      <!-- Transparent Text Fields on Lines -->
+      <!-- Text Fields -->
       <input type="text" class="field field-fullname" name="applicant_fullname">
       <input type="text" class="field field-nationality" name="nationality">
       <input type="text" class="field field-profession" name="profession">
