@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Form - Complete Overlay</title>
+  <title>Port Pass Form - Absolute Red Box Alignment</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
-      background-color: #333;
+      background-color: #2b2b2b;
       margin: 0;
-      padding: 0;
+      padding: 20px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -22,11 +22,10 @@
       position: relative;
       width: 794px;
       height: 1123px;
-      margin: 20px 0;
       background-color: #fff;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
       page-break-after: always;
-      page-break-inside: avoid;
+      overflow: hidden;
     }
 
     .bg-image {
@@ -36,6 +35,7 @@
       width: 100%;
       height: 100%;
       z-index: 1;
+      object-fit: fill;
     }
 
     .overlay-form {
@@ -47,23 +47,27 @@
       z-index: 2;
     }
 
-    .clean-input {
+    /* ചുവപ്പ് മാർക്ക് ചെയ്ത വരകളിൽ ടൈപ്പ് ചെയ്യാനുള്ള ഇൻപുട്ട് സ്റ്റൈൽ */
+    .line-input {
       position: absolute;
       background: transparent;
       border: none;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: bold;
       color: #000;
       outline: none;
-      padding: 0 4px;
-      font-family: Arial, sans-serif;
+      padding: 0 5px;
+      height: 22px;
+      line-height: 22px;
+      font-family: 'Courier New', Courier, monospace, Arial;
     }
 
-    .clean-input:focus {
-      background: rgba(255, 255, 180, 0.4);
+    .line-input:focus {
+      background: rgba(255, 235, 59, 0.35); /* ടൈപ്പ് ചെയ്യുമ്പോൾ ലൈറ്റ് മഞ്ഞ നിറം കാണിക്കും */
     }
 
-    .clean-checkbox {
+    /* ചെക്ക് ബോക്സ് മാർക്കിങ് */
+    .check-box {
       position: absolute;
       width: 18px;
       height: 18px;
@@ -72,7 +76,8 @@
       accent-color: #000;
     }
 
-    .photo-overlay {
+    /* ഫോട്ടോ അപ്‌ലോഡ് ബോക്സ് */
+    .photo-box {
       position: absolute;
       top: 130px;
       left: 54px;
@@ -82,16 +87,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
-    .photo-overlay input[type="file"] {
+    .photo-box input[type="file"] {
       position: absolute;
       width: 100%;
       height: 100%;
       opacity: 0;
       cursor: pointer;
     }
-    .photo-overlay img {
+    .photo-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -104,15 +108,15 @@
       z-index: 100;
     }
     .btn {
-      padding: 10px 20px;
+      padding: 12px 24px;
       background-color: #0d47a1;
       color: white;
       border: none;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: bold;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
     }
 
     @page {
@@ -121,14 +125,9 @@
     }
 
     @media print {
-      html, body {
-        width: 210mm !important;
-        height: 297mm !important;
+      body {
         background: white !important;
-        margin: 0 !important;
         padding: 0 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
       }
       .controls {
         display: none !important;
@@ -136,13 +135,10 @@
       .page-container {
         width: 210mm !important;
         height: 297mm !important;
-        position: relative !important;
-        margin: 0 !important;
         box-shadow: none !important;
-        page-break-after: always !important;
-        page-break-inside: avoid !important;
+        margin: 0 !important;
       }
-      .clean-input:focus {
+      .line-input:focus {
         background: transparent !important;
       }
     }
@@ -156,53 +152,53 @@
 
   <!-- PAGE 1 -->
   <div class="page-container">
-    <!-- background image set as original template -->
     <img src="GATE PASS13081_page-0001.jpg" class="bg-image" alt="Port Pass Page 1">
 
     <div class="overlay-form">
-      <!-- 1. UPLOAD PHOTO RED AREA -->
-      <div class="photo-overlay">
+      
+      <!-- 1. PHOTO UPLOAD BOX (ചുവപ്പ് ഫോട്ടോ ബോക്സ്) -->
+      <div class="photo-box">
         <img id="imgPreview" style="display:none;">
         <input type="file" accept="image/*" title="Click to Upload Photo" onchange="loadPhoto(event)">
       </div>
 
-      <!-- 2. CHECKBOXES (TOP ROW) -->
-      <input type="checkbox" class="clean-checkbox" style="top: 172px; left: 198px;"> <!-- QUAY -->
-      <input type="checkbox" class="clean-checkbox" style="top: 172px; left: 288px;"> <!-- WAREHOUSE -->
-      <input type="checkbox" class="clean-checkbox" style="top: 172px; left: 398px;"> <!-- COMPANY -->
-      <input type="checkbox" class="clean-checkbox" style="top: 172px; left: 518px;"> <!-- RORO YARD -->
-      <input type="checkbox" class="clean-checkbox" style="top: 172px; left: 625px;"> <!-- POLICE -->
+      <!-- 2. CHECKBOXES (ചുവപ്പ് ചെക്ക് ബോക്സുകൾ - FIRST ROW) -->
+      <input type="checkbox" class="check-box" style="top: 182px; left: 198px;"> <!-- QUAY -->
+      <input type="checkbox" class="check-box" style="top: 182px; left: 288px;"> <!-- WAREHOUSE -->
+      <input type="checkbox" class="check-box" style="top: 182px; left: 398px;"> <!-- COMPANY -->
+      <input type="checkbox" class="check-box" style="top: 182px; left: 518px;"> <!-- RORO YARD -->
+      <input type="checkbox" class="check-box" style="top: 182px; left: 625px;"> <!-- POLICE -->
 
-      <!-- 3. CHECKBOXES (SECOND ROW) -->
-      <input type="checkbox" class="clean-checkbox" style="top: 228px; left: 195px;"> <!-- CONTAINER YARD -->
-      <input type="checkbox" class="clean-checkbox" style="top: 228px; left: 332px;"> <!-- IMMIGRATION -->
-      <input type="checkbox" class="clean-checkbox" style="top: 228px; left: 432px;"> <!-- SHIP -->
-      <input type="checkbox" class="clean-checkbox" style="top: 228px; left: 543px;"> <!-- ALL PLACES -->
-      <input type="checkbox" class="clean-checkbox" style="top: 228px; left: 663px;"> <!-- DU TOWER -->
+      <!-- 3. CHECKBOXES (ചുവപ്പ് ചെക്ക് ബോക്സുകൾ - SECOND ROW) -->
+      <input type="checkbox" class="check-box" style="top: 236px; left: 195px;"> <!-- CONTAINER YARD -->
+      <input type="checkbox" class="check-box" style="top: 236px; left: 332px;"> <!-- IMMIGRATION -->
+      <input type="checkbox" class="check-box" style="top: 236px; left: 432px;"> <!-- SHIP -->
+      <input type="checkbox" class="check-box" style="top: 236px; left: 543px;"> <!-- ALL PLACES -->
+      <input type="checkbox" class="check-box" style="top: 236px; left: 663px;"> <!-- DU TOWER -->
 
-      <!-- 4. MAIN FORM LINES -->
-      <input type="text" class="clean-input" style="top: 256px; left: 248px; width: 362px;"> <!-- APPLICANT'S FULL NAME -->
-      <input type="text" class="clean-input" style="top: 288px; left: 248px; width: 362px;"> <!-- NATIONALITY -->
-      <input type="text" class="clean-input" style="top: 320px; left: 248px; width: 362px;"> <!-- PROFESSION -->
-      <input type="text" class="clean-input" style="top: 352px; left: 248px; width: 362px;"> <!-- PASSPORT NO -->
-      <input type="text" class="clean-input" style="top: 384px; left: 248px; width: 362px;"> <!-- UID NO -->
-      <input type="text" class="clean-input" style="top: 416px; left: 248px; width: 362px;"> <!-- EMIRATES ID NO -->
-      <input type="text" class="clean-input" style="top: 448px; left: 248px; width: 362px;"> <!-- COMPANY NAME -->
-      <input type="text" class="clean-input" style="top: 480px; left: 248px; width: 362px;"> <!-- COMPANY ADDRESS & TEL NO -->
-      <input type="text" class="clean-input" style="top: 512px; left: 248px; width: 362px;"> <!-- APPLICANT'S MOBILE NO -->
-      <input type="text" class="clean-input" style="top: 544px; left: 248px; width: 362px;"> <!-- REASON FOR PASS -->
-      <input type="text" class="clean-input" style="top: 576px; left: 248px; width: 362px;"> <!-- DATE OF APPLICATION -->
-      <input type="text" class="clean-input" style="top: 608px; left: 248px; width: 362px;"> <!-- APPLICANT'S SIGNATURE -->
-      <input type="text" class="clean-input" style="top: 638px; left: 248px; width: 362px;"> <!-- APPLICANT'S VISA VALIDITY DATE -->
+      <!-- 4. MAIN FORM RED LINES (ചുവന്ന വരകളിൽ മാത്രം ടൈപ്പ് ചെയ്യാനുള്ളവ) -->
+      <input type="text" class="line-input" style="top: 285px; left: 248px; width: 362px;"> <!-- FULL NAME -->
+      <input type="text" class="line-input" style="top: 320px; left: 248px; width: 362px;"> <!-- NATIONALITY -->
+      <input type="text" class="line-input" style="top: 355px; left: 248px; width: 362px;"> <!-- PROFESSION -->
+      <input type="text" class="line-input" style="top: 390px; left: 248px; width: 362px;"> <!-- PASSPORT NO -->
+      <input type="text" class="line-input" style="top: 425px; left: 248px; width: 362px;"> <!-- UID NO -->
+      <input type="text" class="line-input" style="top: 460px; left: 248px; width: 362px;"> <!-- EMIRATES ID NO -->
+      <input type="text" class="line-input" style="top: 495px; left: 248px; width: 362px;"> <!-- COMPANY NAME -->
+      <input type="text" class="line-input" style="top: 530px; left: 248px; width: 362px;"> <!-- COMPANY ADDRESS & TEL NO -->
+      <input type="text" class="line-input" style="top: 565px; left: 248px; width: 362px;"> <!-- APPLICANT'S MOBILE NO -->
+      <input type="text" class="line-input" style="top: 600px; left: 248px; width: 362px;"> <!-- REASON FOR PASS -->
+      <input type="text" class="line-input" style="top: 635px; left: 248px; width: 362px;"> <!-- DATE OF APPLICATION -->
+      <input type="text" class="line-input" style="top: 670px; left: 248px; width: 362px;"> <!-- APPLICANT'S SIGNATURE -->
+      <input type="text" class="line-input" style="top: 705px; left: 248px; width: 362px;"> <!-- VISA VALIDITY DATE -->
 
-      <!-- 5. PORT PASS PERIOD (WEEK / MONTH / YEAR) -->
-      <input type="text" class="clean-input" style="top: 668px; left: 230px; width: 40px; height: 18px; text-align: center;"> <!-- WEEK -->
-      <input type="text" class="clean-input" style="top: 668px; left: 408px; width: 40px; height: 18px; text-align: center;"> <!-- MONTH -->
-      <input type="text" class="clean-input" style="top: 668px; left: 532px; width: 40px; height: 18px; text-align: center;"> <!-- YEAR -->
+      <!-- 5. PORT PASS PERIOD RED BOXES (WEEK / MONTH / YEAR) -->
+      <input type="text" class="line-input" style="top: 735px; left: 232px; width: 42px; height: 20px; text-align: center;"> <!-- WEEK -->
+      <input type="text" class="line-input" style="top: 735px; left: 410px; width: 42px; height: 20px; text-align: center;"> <!-- MONTH -->
+      <input type="text" class="line-input" style="top: 735px; left: 534px; width: 42px; height: 20px; text-align: center;"> <!-- YEAR -->
 
-      <!-- 6. PORT PASS VALIDITY (FROM / TO) -->
-      <input type="text" class="clean-input" style="top: 700px; left: 213px; width: 84px; height: 20px; text-align: center;"> <!-- FROM -->
-      <input type="text" class="clean-input" style="top: 700px; left: 328px; width: 84px; height: 20px; text-align: center;"> <!-- TO -->
+      <!-- 6. PORT PASS VALIDITY RED BOXES (FROM / TO) -->
+      <input type="text" class="line-input" style="top: 771px; left: 213px; width: 86px; height: 22px; text-align: center;"> <!-- FROM -->
+      <input type="text" class="line-input" style="top: 771px; left: 328px; width: 86px; height: 22px; text-align: center;"> <!-- TO -->
     </div>
   </div>
 
