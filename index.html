@@ -3,146 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Port Pass Application Form</title>
+  <title>Port Pass Application Form - 2 Pages</title>
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
+      padding: 20px;
       background-color: #525659;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
-      font-family: Arial, sans-serif;
+      gap: 20px;
     }
 
-    .print-btn-container {
-      width: 100%;
-      max-width: 800px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .btn-print {
-      background-color: #28a745;
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      width: 100%;
-    }
-
-    .page-container {
-      width: 800px;
-      min-height: 1100px; /* ഇമേജ് കാണാത്തപ്പോഴും ബോക്സ് ഇടിയാതിരിക്കാൻ */
-      background: #ffffff;
+    /* Page Setup A4 */
+    .form-page {
       position: relative;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      width: 210mm;
+      height: 297mm;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      overflow: hidden;
+      page-break-after: always;
     }
 
-    .page-image {
+    /* Background Images */
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      display: block;
+      height: 100%;
+      z-index: 1;
     }
 
-    /* photo box positioning */
+    /* Form Overlay */
+    .overlay-form {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    /* Transparent Text Fields */
+    .field {
+      position: absolute;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      font-weight: bold;
+      color: #000;
+      padding: 0 5px;
+    }
+
+    .field:focus {
+      background: rgba(255, 255, 0, 0.25);
+    }
+
+    /* Checkbox Styling */
+    .chk {
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+      accent-color: #000;
+      margin: 0;
+    }
+
+    /* Photo Upload Box */
     .photo-box {
       position: absolute;
-      top: 15.6%;
-      left: 12.1%;
-      width: 92px;
-      height: 114px;
+      top: 12.6%;
+      left: 6.8%;
+      width: 126px;
+      height: 102px;
       cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
     }
 
-    .photo-box img {
+    .photo-box input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .photo-preview {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    #fileInput {
       display: none;
+      position: absolute;
+      z-index: 1;
     }
 
-    /* Print Fix */
+    /* Checkbox Positions */
+    .chk-quay       { top: 17.5%; left: 25.0%; }
+    .chk-warehouse  { top: 17.5%; left: 37.1%; }
+    .chk-company    { top: 17.5%; left: 51.3%; }
+    .chk-roro       { top: 17.5%; left: 63.8%; }
+    .chk-police     { top: 17.5%; left: 79.5%; }
+
+    .chk-container  { top: 22.9%; left: 25.0%; }
+    .chk-imigration { top: 22.9%; left: 42.6%; }
+    .chk-ship       { top: 22.9%; left: 55.4%; }
+    .chk-allplaces  { top: 22.9%; left: 69.5%; }
+    .chk-dutower    { top: 22.9%; left: 84.6%; }
+
+    /* Text Lines Positions */
+    .field-fullname     { top: 26.0%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-nationality  { top: 28.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-profession   { top: 31.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-passport     { top: 34.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-uid          { top: 37.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-emiratesid   { top: 40.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-companyname  { top: 43.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-companyaddr  { top: 46.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-mobile       { top: 49.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-reason       { top: 52.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-appdate      { top: 55.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-signature    { top: 58.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-visavalidity { top: 61.6%; left: 31.5%; width: 45.5%; height: 2.2%; }
+
+    /* Period Inputs (Year Adjusted Below) */
+    .field-week  { top: 66.0%; left: 29.0%; width: 5.0%; height: 2.0%; text-align: center; }
+    .field-month { top: 66.0%; left: 51.3%; width: 5.0%; height: 2.0%; text-align: center; }
+    .field-year  { top: 66.5%; left: 67.2%; width: 5.0%; height: 2.0%; text-align: center; }
+
+    /* Pass Validity Date Inputs (Font Size Reduced to 11px) */
+    .field-valid-from { top: 69.4%; left: 26.6%; width: 14.0%; height: 2.0%; font-size: 11px; text-align: center; }
+    .field-valid-to   { top: 69.4%; left: 41.3%; width: 14.0%; height: 2.0%; font-size: 11px; text-align: center; }
+
+    /* Print Setup */
     @media print {
-      @page {
-        size: A4 portrait;
+      body {
+        background: none;
+        padding: 0;
+        gap: 0;
+      }
+      .no-print {
+        display: none;
+      }
+      .form-page {
+        box-shadow: none;
         margin: 0;
-      }
-      html, body {
-        background: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .no-print, .print-btn-container {
-        display: none !important;
-      }
-      .page-container {
-        box-shadow: none !important;
-        margin: 0 !important;
-        width: 100% !important;
-        height: 100vh !important;
-        page-break-after: always;
-        page-break-inside: avoid;
-      }
-      .page-container:last-child {
-        page-break-after: auto;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Print Button Banner -->
-  <div class="print-btn-container no-print">
-    <button class="btn-print" onclick="window.print()">
-      Print / Save 2 Pages as PDF / Powered by : ATAVA DIGITAL SERVICES & TRADING
-    </button>
+  <!-- Print Button -->
+  <div class="no-print" style="margin-bottom: 10px; text-align: center;">
+    <button onclick="window.print()" style="padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px;">Print / Save 2 Pages as PDF</button>
   </div>
 
-  <input type="file" id="fileInput" accept="image/*" onchange="previewPhoto(event)">
+  <!-- PAGE 1: Application Form -->
+  <div class="form-page">
+    <img src="GATE PASS13081_page-0001.jpg" alt="Page 1 Form" class="bg-image">
 
-  <!-- PAGE 1 -->
-  <div class="page-container">
-    <!-- ശ്രദ്ധിക്കുക: നിങ്ങളുടെ ഫോൾഡറിലുള്ള ചിത്രത്തിന്റെ പേര് താഴെ നൽകുക (ഉദാഹരണത്തിന്: src="page1.jpg" അല്ലെങ്കിൽ src="1.jpg") -->
-    <img src="page1.jpg" class="page-image" alt="">
+    <form class="overlay-form">
+      <!-- Photo Upload -->
+      <div class="photo-box">
+        <input type="file" accept="image/*" id="photoInput" onchange="previewPhoto(event)">
+        <img id="photoPreview" class="photo-preview" alt="">
+      </div>
 
-    <!-- Photo Overlay -->
-    <div class="photo-box" onclick="document.getElementById('fileInput').click();">
-      <img id="uploadedPhoto" src="" alt="">
-    </div>
+      <!-- Checkboxes -->
+      <input type="checkbox" class="chk chk-quay" name="loc_quay">
+      <input type="checkbox" class="chk chk-warehouse" name="loc_warehouse">
+      <input type="checkbox" class="chk chk-company" name="loc_company">
+      <input type="checkbox" class="chk chk-roro" name="loc_roro">
+      <input type="checkbox" class="chk chk-police" name="loc_police">
+
+      <input type="checkbox" class="chk chk-container" name="loc_container">
+      <input type="checkbox" class="chk chk-imigration" name="loc_imigration">
+      <input type="checkbox" class="chk chk-ship" name="loc_ship">
+      <input type="checkbox" class="chk chk-allplaces" name="loc_allplaces">
+      <input type="checkbox" class="chk chk-dutower" name="loc_dutower">
+
+      <!-- Form Inputs -->
+      <input type="text" class="field field-fullname" name="applicant_fullname">
+      <input type="text" class="field field-nationality" name="nationality">
+      <input type="text" class="field field-profession" name="profession">
+      <input type="text" class="field field-passport" name="passport_no">
+      <input type="text" class="field field-uid" name="uid_no">
+      <input type="text" class="field field-emiratesid" name="emirates_id">
+      <input type="text" class="field field-companyname" name="company_name">
+      <input type="text" class="field field-companyaddr" name="company_address_tel">
+      <input type="text" class="field field-mobile" name="mobile_no">
+      <input type="text" class="field field-reason" name="reason_for_pass">
+      <input type="text" class="field field-appdate" name="date_of_application">
+      <input type="text" class="field field-signature" name="applicant_signature">
+      <input type="text" class="field field-visavalidity" name="visa_validity_date">
+
+      <!-- Period Inputs -->
+      <input type="text" class="field field-week" name="period_week">
+      <input type="text" class="field field-month" name="period_month">
+      <input type="text" class="field field-year" name="period_year">
+
+      <!-- Validity Inputs -->
+      <input type="text" class="field field-valid-from" name="validity_from" placeholder="DD/MM/YYYY">
+      <input type="text" class="field field-valid-to" name="validity_to" placeholder="DD/MM/YYYY">
+    </form>
   </div>
 
-  <!-- PAGE 2 -->
-  <div class="page-container">
-    <img src="page2.jpg" class="page-image" alt="">
+  <!-- PAGE 2: Requirements & Terms -->
+  <div class="form-page">
+    <img src="GATE PASS13081_page-0002.jpg" alt="Page 2 Terms" class="bg-image">
   </div>
 
   <script>
     function previewPhoto(event) {
       const reader = new FileReader();
       reader.onload = function() {
-        document.getElementById('uploadedPhoto').src = reader.result;
+        const output = document.getElementById('photoPreview');
+        output.src = reader.result;
+        output.style.display = 'block';
       };
-      if (event.target.files[0]) {
-        reader.readAsDataURL(event.target.files[0]);
-      }
+      reader.readAsDataURL(event.target.files[0]);
     }
   </script>
 </body>
