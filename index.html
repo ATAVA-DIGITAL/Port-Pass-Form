@@ -44,7 +44,7 @@
       background-color: #218838;
     }
 
-    /* Main Form Container */
+    /* Page Container */
     .page-container {
       width: 800px;
       background: #ffffff;
@@ -58,19 +58,19 @@
       display: block;
     }
 
-    /* Clickable Photo Area */
+    /* Clickable Photo Box Position */
     .photo-box {
       position: absolute;
-      top: 15.6%;     /* കറക്റ്റ് ലൊക്കേഷൻ */
-      left: 12.1%;    /* കറക്റ്റ് ലൊക്കേഷൻ */
-      width: 92px;    /* ഒറിജിനൽ വിഡ്ത്ത് */
-      height: 114px;  /* ഒറിജിനൽ ഹൈറ്റ് */
+      top: 13.0%;
+      left: 7.0%;
+      width: 110px;
+      height: 130px;
       cursor: pointer;
-      overflow: hidden;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      overflow: hidden;
     }
 
     .photo-box img {
@@ -79,84 +79,70 @@
       object-fit: cover;
     }
 
+    /* Hidden File Input */
     #fileInput {
       display: none;
     }
 
-    /* Print CSS for exact 2 pages only */
+    /* Print CSS for Exact 2 Pages Only */
     @media print {
-      body {
-        background: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .no-print, .print-btn-container {
-        display: none !important;
-      }
-
-      .page-container {
-        box-shadow: none;
-        margin: 0;
-        width: 100%;
-        page-break-after: always;
-        page-break-inside: avoid;
-      }
-
-      .page-container:last-child {
-        page-break-after: auto;
-      }
-
       @page {
         size: A4 portrait;
         margin: 0;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: none;
+      }
+      .no-print, button, .print-btn-container {
+        display: none !important;
+      }
+      .page-container {
+        page-break-after: always;
+        page-break-inside: avoid;
+        margin: 0 !important;
+        box-shadow: none !important;
+        width: 100% !important;
+      }
+      .page-container:last-child {
+        page-break-after: auto;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Print Button Banner -->
+  <!-- Print Button -->
   <div class="print-btn-container no-print">
     <button class="btn-print" onclick="window.print()">
       Print / Save 2 Pages as PDF / Powered by : ATAVA DIGITAL SERVICES & TRADING
     </button>
   </div>
 
-  <!-- Hidden File Input for Uploading Photo -->
+  <!-- Hidden Photo File Input -->
   <input type="file" id="fileInput" accept="image/*" onchange="previewPhoto(event)">
 
   <!-- PAGE 1 -->
   <div class="page-container">
-    <!-- Template background image -->
     <img src="page1.jpg" class="page-image" alt="Port Pass Page 1">
 
-    <!-- Interactive Photo Box -->
-    <div class="photo-box" onclick="triggerFileInput()" title="Click to Upload Photo">
-      <img id="uploadedPhoto" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='%23ccc' stroke-width='1.5'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='12' cy='10' r='3'/><path d='M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2'/></svg>" alt="Upload Photo">
+    <!-- Interactive Photo Area -->
+    <div class="photo-box" onclick="document.getElementById('fileInput').click();" title="Click to Upload Photo">
+      <img id="uploadedPhoto" src="" alt="">
     </div>
-
-    <!-- Input fields for Page 1 can be positioned absolute here -->
   </div>
 
   <!-- PAGE 2 -->
   <div class="page-container">
     <img src="page2.jpg" class="page-image" alt="Port Pass Page 2">
-    <!-- Input fields for Page 2 can be positioned absolute here -->
   </div>
 
   <script>
-    // Trigger hidden file input when photo box is clicked
-    function triggerFileInput() {
-      document.getElementById('fileInput').click();
-    }
-
-    // Load photo preview dynamically
     function previewPhoto(event) {
       const reader = new FileReader();
       reader.onload = function() {
-        const img = document.getElementById('uploadedPhoto');
-        img.src = reader.result;
+        document.getElementById('uploadedPhoto').src = reader.result;
       };
       if (event.target.files[0]) {
         reader.readAsDataURL(event.target.files[0]);
