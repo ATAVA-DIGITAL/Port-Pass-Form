@@ -20,7 +20,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Print Header Banner */
     .print-btn-container {
       width: 100%;
       max-width: 800px;
@@ -41,13 +40,9 @@
       width: 100%;
     }
 
-    .btn-print:hover {
-      background-color: #218838;
-    }
-
-    /* Main Page Box */
     .page-container {
       width: 800px;
+      min-height: 1100px; /* ഇമേജ് കാണാത്തപ്പോഴും ബോക്സ് ഇടിയാതിരിക്കാൻ */
       background: #ffffff;
       position: relative;
       margin-bottom: 20px;
@@ -59,20 +54,19 @@
       display: block;
     }
 
-    /* Photo Upload Box - Perfect Position */
+    /* photo box positioning */
     .photo-box {
       position: absolute;
-      top: 13.0%;
-      left: 7.0%;
-      width: 110px;
-      height: 130px;
+      top: 15.6%;
+      left: 12.1%;
+      width: 92px;
+      height: 114px;
       cursor: pointer;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      border: 1px dashed #bbb;
     }
 
     .photo-box img {
@@ -85,38 +79,7 @@
       display: none;
     }
 
-    /* Input Fields Absolute Overlay */
-    .input-field {
-      position: absolute;
-      border: none;
-      background: transparent;
-      font-size: 15px;
-      font-weight: bold;
-      color: #000;
-      outline: none;
-      font-family: Arial, sans-serif;
-    }
-
-    .checkbox-field {
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-
-    /* Field Positions (Adjust % if needed for inputs) */
-    .field-name { top: 52.8%; left: 32%; width: 40%; }
-    .field-nationality { top: 57.2%; left: 32%; width: 40%; }
-    .field-profession { top: 61.8%; left: 32%; width: 40%; }
-    .field-passport { top: 66.2%; left: 32%; width: 40%; }
-    .field-uid { top: 70.8%; left: 32%; width: 40%; }
-    .field-eid { top: 75.2%; left: 32%; width: 40%; }
-    .field-company { top: 79.8%; left: 32%; width: 40%; }
-    .field-address { top: 84.2%; left: 32%; width: 40%; }
-    .field-mobile { top: 88.8%; left: 32%; width: 40%; }
-    .field-reason { top: 93.2%; left: 32%; width: 40%; }
-
-    /* Strict 2-Page Print Settings */
+    /* Print Fix */
     @media print {
       @page {
         size: A4 portrait;
@@ -141,9 +104,6 @@
       .page-container:last-child {
         page-break-after: auto;
       }
-      .photo-box {
-        border: none;
-      }
     }
   </style>
 </head>
@@ -156,35 +116,22 @@
     </button>
   </div>
 
-  <!-- Hidden Photo File Input -->
   <input type="file" id="fileInput" accept="image/*" onchange="previewPhoto(event)">
 
   <!-- PAGE 1 -->
   <div class="page-container">
-    <!-- Template Image - പേര് നിങ്ങളുടെ ഇമേജിന് അനുസരിച്ച് മാറ്റുക -->
-    <img src="page1.jpg" class="page-image" alt="Port Pass Page 1">
+    <!-- ശ്രദ്ധിക്കുക: നിങ്ങളുടെ ഫോൾഡറിലുള്ള ചിത്രത്തിന്റെ പേര് താഴെ നൽകുക (ഉദാഹരണത്തിന്: src="page1.jpg" അല്ലെങ്കിൽ src="1.jpg") -->
+    <img src="page1.jpg" class="page-image" alt="">
 
-    <!-- Interactive Photo Box -->
-    <div class="photo-box" onclick="document.getElementById('fileInput').click();" title="Click to Upload Photo">
-      <img id="uploadedPhoto" src="" alt="Upload Photo">
+    <!-- Photo Overlay -->
+    <div class="photo-box" onclick="document.getElementById('fileInput').click();">
+      <img id="uploadedPhoto" src="" alt="">
     </div>
-
-    <!-- Text Input Fields -->
-    <input type="text" class="input-field field-name">
-    <input type="text" class="input-field field-nationality">
-    <input type="text" class="input-field field-profession">
-    <input type="text" class="input-field field-passport">
-    <input type="text" class="input-field field-uid">
-    <input type="text" class="input-field field-eid">
-    <input type="text" class="input-field field-company">
-    <input type="text" class="input-field field-address">
-    <input type="text" class="input-field field-mobile">
-    <input type="text" class="input-field field-reason">
   </div>
 
   <!-- PAGE 2 -->
   <div class="page-container">
-    <img src="page2.jpg" class="page-image" alt="Port Pass Page 2">
+    <img src="page2.jpg" class="page-image" alt="">
   </div>
 
   <script>
