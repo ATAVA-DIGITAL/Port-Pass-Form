@@ -20,7 +20,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Print Header Button */
+    /* Print Header Banner */
     .print-btn-container {
       width: 100%;
       max-width: 800px;
@@ -38,13 +38,14 @@
       border-radius: 6px;
       cursor: pointer;
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      width: 100%;
     }
 
     .btn-print:hover {
       background-color: #218838;
     }
 
-    /* Page Container */
+    /* Main Page Box */
     .page-container {
       width: 800px;
       background: #ffffff;
@@ -58,7 +59,7 @@
       display: block;
     }
 
-    /* Clickable Photo Box Position */
+    /* Photo Upload Box - Perfect Position */
     .photo-box {
       position: absolute;
       top: 13.0%;
@@ -71,6 +72,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      border: 1px dashed #bbb;
     }
 
     .photo-box img {
@@ -79,41 +81,75 @@
       object-fit: cover;
     }
 
-    /* Hidden File Input */
     #fileInput {
       display: none;
     }
 
-    /* Print CSS for Exact 2 Pages Only */
+    /* Input Fields Absolute Overlay */
+    .input-field {
+      position: absolute;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      font-weight: bold;
+      color: #000;
+      outline: none;
+      font-family: Arial, sans-serif;
+    }
+
+    .checkbox-field {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    /* Field Positions (Adjust % if needed for inputs) */
+    .field-name { top: 52.8%; left: 32%; width: 40%; }
+    .field-nationality { top: 57.2%; left: 32%; width: 40%; }
+    .field-profession { top: 61.8%; left: 32%; width: 40%; }
+    .field-passport { top: 66.2%; left: 32%; width: 40%; }
+    .field-uid { top: 70.8%; left: 32%; width: 40%; }
+    .field-eid { top: 75.2%; left: 32%; width: 40%; }
+    .field-company { top: 79.8%; left: 32%; width: 40%; }
+    .field-address { top: 84.2%; left: 32%; width: 40%; }
+    .field-mobile { top: 88.8%; left: 32%; width: 40%; }
+    .field-reason { top: 93.2%; left: 32%; width: 40%; }
+
+    /* Strict 2-Page Print Settings */
     @media print {
       @page {
         size: A4 portrait;
         margin: 0;
       }
-      body {
-        margin: 0;
-        padding: 0;
-        background: none;
+      html, body {
+        background: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
-      .no-print, button, .print-btn-container {
+      .no-print, .print-btn-container {
         display: none !important;
       }
       .page-container {
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
         page-break-after: always;
         page-break-inside: avoid;
-        margin: 0 !important;
-        box-shadow: none !important;
-        width: 100% !important;
       }
       .page-container:last-child {
         page-break-after: auto;
+      }
+      .photo-box {
+        border: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Print Button -->
+  <!-- Print Button Banner -->
   <div class="print-btn-container no-print">
     <button class="btn-print" onclick="window.print()">
       Print / Save 2 Pages as PDF / Powered by : ATAVA DIGITAL SERVICES & TRADING
@@ -125,12 +161,25 @@
 
   <!-- PAGE 1 -->
   <div class="page-container">
+    <!-- Template Image - പേര് നിങ്ങളുടെ ഇമേജിന് അനുസരിച്ച് മാറ്റുക -->
     <img src="page1.jpg" class="page-image" alt="Port Pass Page 1">
 
-    <!-- Interactive Photo Area -->
+    <!-- Interactive Photo Box -->
     <div class="photo-box" onclick="document.getElementById('fileInput').click();" title="Click to Upload Photo">
-      <img id="uploadedPhoto" src="" alt="">
+      <img id="uploadedPhoto" src="" alt="Upload Photo">
     </div>
+
+    <!-- Text Input Fields -->
+    <input type="text" class="input-field field-name">
+    <input type="text" class="input-field field-nationality">
+    <input type="text" class="input-field field-profession">
+    <input type="text" class="input-field field-passport">
+    <input type="text" class="input-field field-uid">
+    <input type="text" class="input-field field-eid">
+    <input type="text" class="input-field field-company">
+    <input type="text" class="input-field field-address">
+    <input type="text" class="input-field field-mobile">
+    <input type="text" class="input-field field-reason">
   </div>
 
   <!-- PAGE 2 -->
