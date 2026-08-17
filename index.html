@@ -77,13 +77,13 @@
       margin: 0;
     }
 
-    /* Photo Upload Box - Updated Fix */
+    /* Photo Upload Box - Fit Perfectly Inside the Inner Frame */
     .photo-box {
       position: absolute;
-      top: 12.0%;
-      left: 6.2%;
-      width: 128px;
-      height: 128px;
+      top: 13.0%;
+      left: 7.7%;
+      width: 96px;
+      height: 100px;
       cursor: pointer;
       overflow: hidden !important;
       background: transparent;
@@ -103,7 +103,7 @@
     .photo-preview {
       width: 100%;
       height: 100%;
-      object-fit: fill; /* ബോക്സിന് ഉള്ളിൽ കൃത്യമായി ഫിറ്റ് ആവുന്നു */
+      object-fit: cover;
       display: none;
     }
 
@@ -120,22 +120,22 @@
     .chk-allplaces  { top: 22.9%; left: 69.5%; }
     .chk-dutower    { top: 22.9%; left: 84.6%; }
 
-    /* Text Lines Positions - Moved slightly left for alignment */
-    .field-fullname     { top: 26.0%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-nationality  { top: 28.9%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-profession   { top: 31.9%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-passport     { top: 34.9%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-uid          { top: 37.8%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-emiratesid   { top: 40.8%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-companyname  { top: 43.8%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-companyaddr  { top: 46.8%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-mobile       { top: 49.7%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-reason       { top: 52.7%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-appdate      { top: 55.7%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-signature    { top: 58.7%; left: 28.5%; width: 48.5%; height: 2.2%; }
-    .field-visavalidity { top: 61.6%; left: 28.5%; width: 48.5%; height: 2.2%; }
+    /* Text Lines Positions - Restored to Original Alignment */
+    .field-fullname     { top: 26.0%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-nationality  { top: 28.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-profession   { top: 31.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-passport     { top: 34.9%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-uid          { top: 37.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-emiratesid   { top: 40.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-companyname  { top: 43.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-companyaddr  { top: 46.8%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-mobile       { top: 49.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-reason       { top: 52.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-appdate      { top: 55.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-signature    { top: 58.7%; left: 31.5%; width: 45.5%; height: 2.2%; }
+    .field-visavalidity { top: 61.6%; left: 31.5%; width: 45.5%; height: 2.2%; }
 
-    /* Period Inputs - Year Vertically Centered */
+    /* Period Inputs - Year Centered Properly */
     .field-week  { top: 66.0%; left: 29.0%; width: 5.0%; height: 2.0%; text-align: center; }
     .field-month { top: 66.0%; left: 51.3%; width: 5.0%; height: 2.0%; text-align: center; }
     .field-year  { top: 66.0%; left: 67.2%; width: 5.0%; height: 2.0%; text-align: center; }
