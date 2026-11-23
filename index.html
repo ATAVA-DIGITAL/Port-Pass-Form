@@ -175,15 +175,15 @@
 </head>
 <body>
 
-  <!-- Print & Font Size Controls -->
+  <!-- Print & Individual Field Font Size Controls -->
   <div class="no-print" style="margin-bottom: 10px; text-align: center; display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
     <button onclick="window.print()" style="padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px;">Print / Save 2 Pages as PDF / ATAVA DIGITAL SERVICES & TRADING</button>
     
     <div style="background: white; padding: 6px 12px; border-radius: 5px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-      <span style="font-size: 14px; font-weight: bold; color: #333;">Text Size:</span>
-      <button type="button" onclick="changeFontSize(-1)" style="padding: 6px 12px; font-size: 14px; font-weight: bold; cursor: pointer; background: #0056b3; color: white; border: none; border-radius: 4px;">A-</button>
-      <span id="fontSizeDisplay" style="font-size: 14px; font-weight: bold; min-width: 38px; text-align: center;">14px</span>
-      <button type="button" onclick="changeFontSize(1)" style="padding: 6px 12px; font-size: 14px; font-weight: bold; cursor: pointer; background: #0056b3; color: white; border: none; border-radius: 4px;">A+</button>
+      <span id="activeFieldLabel" style="font-size: 13px; font-weight: bold; color: #333; min-width: 140px; text-align: left;">Select a box</span>
+      <button type="button" onmousedown="event.preventDefault(); changeActiveFieldSize(-1)" style="padding: 6px 12px; font-size: 14px; font-weight: bold; cursor: pointer; background: #0056b3; color: white; border: none; border-radius: 4px;">A-</button>
+      <span id="activeFieldSizeDisplay" style="font-size: 14px; font-weight: bold; min-width: 38px; text-align: center;">--</span>
+      <button type="button" onmousedown="event.preventDefault(); changeActiveFieldSize(1)" style="padding: 6px 12px; font-size: 14px; font-weight: bold; cursor: pointer; background: #0056b3; color: white; border: none; border-radius: 4px;">A+</button>
     </div>
   </div>
 
@@ -212,28 +212,28 @@
       <input type="checkbox" class="chk chk-dutower" name="loc_dutower">
 
       <!-- Form Inputs -->
-      <input type="text" class="field field-fullname" name="applicant_fullname">
-      <input type="text" class="field field-nationality" name="nationality">
-      <input type="text" class="field field-profession" name="profession">
-      <input type="text" class="field field-passport" name="passport_no">
-      <input type="text" class="field field-uid" name="uid_no">
-      <input type="text" class="field field-emiratesid" name="emirates_id">
-      <input type="text" class="field field-companyname" name="company_name">
-      <input type="text" class="field field-companyaddr" name="company_address_tel">
-      <input type="text" class="field field-mobile" name="mobile_no">
-      <input type="text" class="field field-reason" name="reason_for_pass">
-      <input type="text" class="field field-appdate" name="date_of_application">
-      <input type="text" class="field field-signature" name="applicant_signature">
-      <input type="text" class="field field-visavalidity" name="visa_validity_date">
+      <input type="text" class="field field-fullname" name="applicant_fullname" data-label="Full Name">
+      <input type="text" class="field field-nationality" name="nationality" data-label="Nationality">
+      <input type="text" class="field field-profession" name="profession" data-label="Profession">
+      <input type="text" class="field field-passport" name="passport_no" data-label="Passport No">
+      <input type="text" class="field field-uid" name="uid_no" data-label="UID No">
+      <input type="text" class="field field-emiratesid" name="emirates_id" data-label="Emirates ID">
+      <input type="text" class="field field-companyname" name="company_name" data-label="Company Name">
+      <input type="text" class="field field-companyaddr" name="company_address_tel" data-label="Company Address/Tel">
+      <input type="text" class="field field-mobile" name="mobile_no" data-label="Mobile No">
+      <input type="text" class="field field-reason" name="reason_for_pass" data-label="Reason">
+      <input type="text" class="field field-appdate" name="date_of_application" data-label="App Date">
+      <input type="text" class="field field-signature" name="applicant_signature" data-label="Signature">
+      <input type="text" class="field field-visavalidity" name="visa_validity_date" data-label="Visa Validity">
 
       <!-- Period Inputs -->
-      <input type="text" class="field field-week" name="period_week">
-      <input type="text" class="field field-month" name="period_month">
-      <input type="text" class="field field-year" name="period_year">
+      <input type="text" class="field field-week" name="period_week" data-label="Week">
+      <input type="text" class="field field-month" name="period_month" data-label="Month">
+      <input type="text" class="field field-year" name="period_year" data-label="Year">
 
       <!-- Validity Inputs -->
-      <input type="text" class="field field-valid-from" name="validity_from" placeholder="DD/MM/YYYY">
-      <input type="text" class="field field-valid-to" name="validity_to" placeholder="DD/MM/YYYY">
+      <input type="text" class="field field-valid-from" name="validity_from" placeholder="DD/MM/YYYY" data-label="Valid From">
+      <input type="text" class="field field-valid-to" name="validity_to" placeholder="DD/MM/YYYY" data-label="Valid To">
     </form>
   </div>
 
@@ -243,6 +243,8 @@
   </div>
 
   <script>
+    let activeField = null;
+
     function previewPhoto(event) {
       const file = event.target.files[0];
       if (file) {
@@ -256,22 +258,39 @@
       }
     }
 
-    let currentFontSize = 14;
-    function changeFontSize(step) {
-      currentFontSize += step;
-      if (currentFontSize < 8) currentFontSize = 8;
-      if (currentFontSize > 22) currentFontSize = 22;
+    function getCurrentFontSize(el) {
+      const computed = window.getComputedStyle(el).fontSize;
+      return parseFloat(computed) || 14;
+    }
 
-      document.getElementById('fontSizeDisplay').innerText = currentFontSize + 'px';
+    function updateSizeToolbar(el) {
+      const labelEl = document.getElementById('activeFieldLabel');
+      const sizeEl = document.getElementById('activeFieldSizeDisplay');
+      if (!el) {
+        labelEl.innerText = 'Select a box';
+        sizeEl.innerText = '--';
+        return;
+      }
+      labelEl.innerText = el.getAttribute('data-label') || el.name || 'Field';
+      sizeEl.innerText = Math.round(getCurrentFontSize(el)) + 'px';
+    }
 
-      const fields = document.querySelectorAll('.field');
-      fields.forEach(field => {
-        if (field.classList.contains('field-valid-from') || field.classList.contains('field-valid-to')) {
-          field.style.fontSize = Math.max(7, currentFontSize - 3) + 'px';
-        } else {
-          field.style.fontSize = currentFontSize + 'px';
-        }
+    document.querySelectorAll('.field').forEach(field => {
+      field.addEventListener('focus', function() {
+        activeField = this;
+        updateSizeToolbar(activeField);
       });
+    });
+
+    function changeActiveFieldSize(step) {
+      if (!activeField) return;
+      let currentSize = getCurrentFontSize(activeField);
+      let newSize = currentSize + step;
+      if (newSize < 7) newSize = 7;
+      if (newSize > 24) newSize = 24;
+
+      activeField.style.fontSize = newSize + 'px';
+      updateSizeToolbar(activeField);
     }
   </script>
 </body>
