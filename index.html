@@ -24,11 +24,20 @@
     .form-page {
       position: relative;
       width: 210mm;
-      height: 297mm;
+      height: 296.5mm;
       background: white;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       overflow: hidden;
+    }
+
+    .form-page.page-1 {
       page-break-after: always;
+      break-after: page;
+    }
+
+    .form-page.page-2 {
+      page-break-after: avoid;
+      break-after: avoid;
     }
 
     /* Background Images */
@@ -158,24 +167,29 @@
     }
 
     @media print {
-      body {
-        background: none;
-        padding: 0;
-        gap: 0;
+      html, body {
+        width: 210mm;
+        height: 593mm;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: none !important;
+        display: block !important;
       }
       .no-print {
-        display: none;
+        display: none !important;
       }
       .form-page {
-        box-shadow: none;
-        margin: 0;
+        box-shadow: none !important;
+        margin: 0 !important;
+        width: 210mm;
+        height: 296.5mm;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Print & Individual Field Font Size Controls -->
+  <!-- Print & Individual Field Font Size Controls (Screen Only) -->
   <div class="no-print" style="margin-bottom: 10px; text-align: center; display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
     <button onclick="window.print()" style="padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px;">Print / Save 2 Pages as PDF / ATAVA DIGITAL SERVICES & TRADING</button>
     
@@ -188,7 +202,7 @@
   </div>
 
   <!-- PAGE 1: Application Form -->
-  <div class="form-page">
+  <div class="form-page page-1">
     <img src="GATE PASS13081_page-0001.jpg" alt="Page 1 Form" class="bg-image">
 
     <form class="overlay-form">
@@ -238,7 +252,7 @@
   </div>
 
   <!-- PAGE 2: Requirements & Terms -->
-  <div class="form-page">
+  <div class="form-page page-2">
     <img src="GATE PASS13081_page-0002.jpg" alt="Page 2 Terms" class="bg-image">
   </div>
 
